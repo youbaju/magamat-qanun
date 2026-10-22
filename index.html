@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<script>(function(){var P='organ_',g=Storage.prototype.getItem,st=Storage.prototype.setItem,r=Storage.prototype.removeItem;Storage.prototype.getItem=function(k){if(k==='oudStringCountPref'&&g.call(this,P+'oudInstrument')==='organ')return '6';return g.call(this,P+k)};Storage.prototype.setItem=function(k,v){return st.call(this,P+k,v)};Storage.prototype.removeItem=function(k){return r.call(this,P+k)};})();</script>
+<script>(function(){var P='qanun_',g=Storage.prototype.getItem,st=Storage.prototype.setItem,r=Storage.prototype.removeItem;Storage.prototype.getItem=function(k){if(k==='oudStringCountPref'){var _i=g.call(this,P+'oudInstrument');if(_i==='organ'||_i==='qanun')return '6'}return g.call(this,P+k)};Storage.prototype.setItem=function(k,v){return st.call(this,P+k,v)};Storage.prototype.removeItem=function(k){return r.call(this,P+k)};})();</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -5703,7 +5703,7 @@ function buildOudStatic(){
       }));
       // بوضع الأورغ يُجبَر العدد على 6 داخلياً، فنقرأ عدد أوتار العود الحقيقي المحفوظ مباشرة (بدون الطبقة الوسيطة) ليبقى النص صحيحاً وهو باهت
       let realStrCount = OUD.STRING_COUNT;
-      try { if (localStorage.getItem('oudInstrument') === 'organ') { const raw = localStorage['organ_oudStringCountPref']; realStrCount = raw ? parseInt(raw) : 5; } } catch (e) {}
+      try { if (localStorage.getItem('oudInstrument') === 'organ' || localStorage.getItem('oudInstrument') === 'qanun') { const raw = localStorage['qanun_oudStringCountPref']; realStrCount = raw ? parseInt(raw) : 5; } } catch (e) {}
       const numStr = (realStrCount === 6) ? '5' : '6'; // الزر يعرض العدد الذي سينتقل إليه بعد الضغط
       const wordStr = (window.oudLanguage === 'en') ? 'Strings' : 'أوتار';
       // الكلمة فوق (أصغر، أزرق)، والرقم تحت (أكبر، أحمر) — يصير الرقم أبرز عنصر بالزر
@@ -11710,14 +11710,21 @@ svg#shared-oudSvg #organLayer .okey.blk.off rect{pointer-events:auto}
 svg#shared-oudSvg #organLayer .okey rect,svg#shared-oudSvg #instrumentToggleBtn rect{pointer-events:auto}
 svg#shared-oudSvg #organLayer .okey .obase,svg#shared-oudSvg #organLayer .olabel *{pointer-events:none}
 html,body{overscroll-behavior-y:none}
+#qanunLayer .qpill{cursor:pointer;transition:transform .06s}
+#qanunLayer .qpill.off{cursor:default}
+#qanunLayer .qpill.pressed{transform:translateY(3px);filter:brightness(.88) drop-shadow(0 0 4px #ffd54a)}
+#qanunLayer .qpill rect{pointer-events:auto}
+#qanunLayer .qpill.off rect{pointer-events:none}
+#qanunLayer .olabel{pointer-events:none}
+#qanunLayer .olabel text{fill:#fff}
 #instrumentToggleBtn{cursor:pointer}
 #instrumentToggleBtn:active{transform:translateY(3px)}
 `;
 document.head.appendChild(st);
 
 // ===== الحالة =====
-let organMode = false;
-try { organMode = localStorage.getItem('oudInstrument') === 'organ'; } catch (e) {}
+let organMode = false, qanunMode = false;
+try { const _in = localStorage.getItem('oudInstrument'); qanunMode = _in === 'qanun'; organMode = _in === 'organ' || qanunMode; } catch (e) {}
 
 const layer = mk('g', { id: 'organLayer' });
 const defs = mk('defs', {}, layer);
@@ -11767,9 +11774,11 @@ function render() {
 function doRender() {
   if (!svgShown()) return;
   svg.classList.toggle('organ-mode', organMode);
-  layer.style.display = organMode ? '' : 'none';
+  layer.style.display = (organMode && !qanunMode) ? '' : 'none';
+  qLayer.style.display = qanunMode ? '' : 'none';
   placeToggle();
   if (!organMode) { layoutFooter(); return; }
+  if (qanunMode) { renderQanun(); placeToggle(); layoutFooter(); return; }
   while (body.firstChild) body.removeChild(body.firstChild);
   { const vb = svg.viewBox.baseVal; if (vb && vb.width) { X0 = vb.x + 10; CW = vb.width - 20; } }
   const { src, chord } = source();
@@ -11913,6 +11922,135 @@ function doRender() {
   placeToggle(); layoutFooter();
 }
 
+// ===== القانون (آلة ثالثة): يُرسم من نغمات المقام نفسها =====
+const qLayer = mk('g', { id: 'qanunLayer' });
+const qDefs = mk('defs', {}, qLayer);
+{ const lg = (id, x2, y2, stops) => { const g = mk('linearGradient', { id, x1: 0, y1: 0, x2, y2 }, qDefs); stops.forEach(s => mk('stop', { offset: s[0], 'stop-color': s[1] }, g)); };
+  lg('qWood', 1, 1, [['0', '#ecbe78'], ['.5', '#d9a85f'], ['1', '#ecbe78']]);
+  lg('qSkin', 1, 0, [['0', '#8a6a52'], ['1', '#6f4a2f']]);
+  lg('qCard', 0, 1, [['0', '#fbf0d6'], ['1', '#e6cf9f']]);
+  lg('qBlue', 0, 1, [['0', '#5b97ea'], ['1', '#2b6fc9']]);
+  lg('qRed', 0, 1, [['0', '#ef6a6a'], ['1', '#d64545']]);
+  lg('qYel', 0, 1, [['0', '#ffe970'], ['1', '#ffd000']]);
+  lg('qGrn', 0, 1, [['0', '#2fae5f'], ['1', '#1B7A3D']]);
+  const f = mk('filter', { id: 'qGlow', x: '-60%', y: '-60%', width: '220%', height: '220%' }, qDefs);
+  mk('feGaussianBlur', { in: 'SourceGraphic', stdDeviation: 1.4, result: 'b' }, f);
+  const mg = mk('feMerge', {}, f); mk('feMergeNode', { in: 'b' }, mg); mk('feMergeNode', { in: 'SourceGraphic' }, mg);
+  const sh = mk('filter', { id: 'qShadow', x: '-20%', y: '-30%', width: '140%', height: '180%' }, qDefs);
+  mk('feDropShadow', { dx: 0, dy: 1, stdDeviation: 1, 'flood-color': '#000', 'flood-opacity': .45 }, sh); }
+svg.insertBefore(qLayer, document.getElementById('oudControlBtnsLayer'));
+const qBody = mk('g', {}, qLayer);
+const Q_NATQ = [10, 14, 18, 20, 24, 28, 32];             // ربع التون (من صول٣=0) لكل حرف: دو ري مي فا صول لا سي
+const Q_PC = [0, 2, 4, 5, 7, 9, 11];
+const Q_TXT = { 'دو': 0, 'رى': 1, 'ري': 1, 'مي': 2, 'فا': 3, 'صول': 4, 'لا': 5, 'سي': 6, 'Do': 0, 'Re': 1, 'Mi': 2, 'Fa': 3, 'Sol': 4, 'La': 5, 'Si': 6, 'C': 0, 'D': 1, 'E': 2, 'F': 3, 'G': 4, 'A': 5, 'B': 6 };
+function qLetterOf(src, nt) {
+  const els = Array.from(src.querySelectorAll('[data-scale-idx="' + nt.idx + '"]')).filter(e => e.tagName === 'text');
+  for (const e of els) { const k = (e.textContent || '').trim(); if (k in Q_TXT) return Q_TXT[k]; }
+  let best = 0, bd = 99;
+  for (let L = 0; L < 7; L++) { let d = (((nt.q - Q_NATQ[L]) % 24) + 36) % 24 - 12; if (Math.abs(d) < bd) { bd = Math.abs(d); best = L; } }
+  return best;
+}
+function renderQanun() {
+  while (qBody.firstChild) qBody.removeChild(qBody.firstChild);
+  { const vb = svg.viewBox.baseVal; if (vb && vb.width) { X0 = vb.x + 10; CW = vb.width - 20; } }
+  const so = source(), chord = so.chord;
+  const nlay = document.getElementById('oudNotesLayer'), clay = document.getElementById('chordHighlightLayer');
+  const src = nlay;   // الأوتار والعرب دائماً من سلم المقام كاملاً
+  const pri = x => x.fill === '#ffe100' ? 3 : (x.cur ? 2 : (x.fill === '#1B7A3D' ? 1 : 0));
+  const place = (lay) => {
+    const strs = new Map(), moved = [];
+    const put = (key, L, dev, nt) => { const o = strs.get(key); if (!o || pri(nt) > pri(o.nt)) strs.set(key, { L, dev, nt }); };
+    collect(lay).forEach(nt => {
+      const L = qLetterOf(lay, nt);
+      const dev = (((nt.q - Q_NATQ[L]) % 24) + 36) % 24 - 12;
+      const oct = Math.round((nt.q - dev - Q_NATQ[L]) / 24), key = oct * 7 + L;
+      // مي وسي ليس فيهما عربة فوق الطبيعي: النغمة الأعلى تنتقل للوتر التالي بعربة نازلة، وإن كان مشغولاً بقيت على وترها باسم الوتر التالي
+      if ((L === 2 || L === 6) && dev > 0) moved.push({ key, L, dev, nt }); else put(key, L, dev, nt);
+    });
+    moved.forEach(m => { if (!strs.has(m.key + 1)) put(m.key + 1, (m.L + 1) % 7, m.dev - 2, m.nt); else put(m.key, (m.L + 1) % 7, m.dev - 2, m.nt); });
+    return strs;
+  };
+  const strs = place(src);
+  const cs = chord ? place(clay) : null;
+  let keys = Array.from(strs.keys()).sort((a, b) => a - b);
+  if (chord) {   // الكوردات: كل أوتار المدى (مثل العود)، والمستطيلات لنغمات الكورد فقط
+    const all = keys.concat(Array.from(cs.keys()));
+    const lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+    keys = []; for (let k = lo; k <= hi; k++) keys.push(k);
+  }
+  const infoOf = k => chord ? (cs.get(k) || strs.get(k) || { L: ((k % 7) + 7) % 7, dev: 0, nt: null }) : strs.get(k);
+  const n = keys.length;
+  // الأبعاد: وحدة u نسبةً إلى ارتفاع اللوحة
+  const u = CH / 150, HQ = CH + 24;
+  const SW = 3.5 * u, Wb = CW - SW, bx = SW / 2;
+  const root = mk('g', { transform: `translate(${X0 + bx},${Y0})` }, qBody);
+  const top = 0, bot = HQ, RT = Wb * 0.46, RB = Wb;
+  const CUT = 16 * u, rxAt = y => Math.min(RB, RT + (RB - RT) * (y - top) / (bot - CUT - top));
+  // حافة الجلد المائلة (الأوتار تنتهي عندها لا فوق إطار الخشب الفاتح)
+  const skinX = y => { const x1 = RT - 6 * u * 1.3, y1 = top + 6 * u, x2 = RB - 6 * u * 2.2, y2 = bot - CUT; return Math.min(x2, x1 + (x2 - x1) * (y - y1) / (y2 - y1)); };
+  const padY = 22, step = n > 1 ? Math.min((HQ - 2 * padY) / (n - 1), 40 * u) : 0;
+  const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
+  const yOf = j => yBot - j * step;
+  const NW = 40 * u, lz = 8 * u + NW, LW = 15 * u, LG = 5 * u, LH = Math.min(13 * u, step * .8), div = lz + 4 * LW + 3 * LG + 8 * u;
+  mk('polygon', { points: `0,${top} ${RT},${top} ${RB},${bot - CUT} ${RB},${bot} 0,${bot}`, fill: 'url(#qWood)', stroke: '#8a6a38', 'stroke-width': 3.5 * u, 'stroke-linejoin': 'round' }, root);
+  const i6 = 6 * u;
+  mk('polygon', { points: `${i6},${top + i6} ${div},${top + i6} ${div},${bot - i6} ${i6},${bot - i6}`, fill: '#4a2f1c' }, root);
+  mk('polygon', { points: `${div + 3 * u},${top + i6} ${RT - i6 * 1.3},${top + i6} ${RB - i6 * 2.2},${bot - CUT} ${RB - i6 * 2.2},${bot - i6} ${div + 3 * u},${bot - i6}`, fill: 'url(#qSkin)', stroke: '#3c2412', 'stroke-width': u }, root);
+  const div2 = lz - 4 * u;
+  [div2, div].forEach((x, i) => mk('line', { x1: x, y1: top, x2: x, y2: bot, stroke: '#8a6a38', 'stroke-width': (i ? 3.5 : 2.5) * u }, root));
+  const pillW = 68 * u, pillX = div + 8 * u, pillH = Math.min(20 * u, step * .85);
+  const baseNm = L => baseName(Q_PC[L]);
+  const lbl = (parent, nt, cx, cy, maxW, maxH, lay) => {
+    const els = Array.from((lay || src).querySelectorAll('[data-scale-idx="' + nt.idx + '"]')).filter(e => e.tagName !== 'rect');
+    if (!els.length) return false;
+    const outer = mk('g', { class: 'olabel' }, parent), inner = mk('g', {}, outer);
+    els.forEach(e => { const c = e.cloneNode(true); c.removeAttribute('transform'); c.querySelectorAll('*').forEach(x => x.removeAttribute('transform')); inner.appendChild(c); });
+    let bb; try { bb = inner.getBBox(); } catch (e) { bb = { x: -20, y: -12, width: 40, height: 24 }; }
+    const s = Math.min(1.3, maxW / Math.max(1, bb.width), maxH / Math.max(1, bb.height));
+    inner.setAttribute('transform', `translate(${-(bb.x + bb.width / 2)},${-(bb.y + bb.height / 2)})`);
+    outer.setAttribute('transform', `translate(${cx},${cy}) scale(${s})`);
+    return true;
+  };
+  const fillFor = nt => nt.fill === '#ffe100' ? 'url(#qYel)' : (nt.fill === '#1B7A3D' ? 'url(#qGrn)' : (nt.cur ? 'url(#qRed)' : 'url(#qBlue)'));
+  const strokeFor = nt => nt.fill === '#ffe100' ? '#6b5300' : (nt.fill === '#1B7A3D' ? '#04230f' : (nt.cur ? '#5e1414' : '#06214a'));
+  // الأوتار (٣ لكل نغمة) من أول القانون إلى مفاتيح الشد
+  for (let j = 0; j < n; j++) {
+    const key = keys[j], L = ((key % 7) + 7) % 7, y = yOf(j), xe = skinX(y) - 1.5 * u, gold = false;
+    for (const d of [-3.5, 0, 3.5]) {
+      if (gold) mk('line', { x1: 6 * u, y1: y + d * u, x2: xe, y2: y + d * u, stroke: '#2a1306', 'stroke-width': 4.2 * u, opacity: .9 }, root);
+      mk('line', { x1: 6 * u, y1: y + d * u, x2: xe, y2: y + d * u, stroke: gold ? '#fbe08c' : '#e8ebee', 'stroke-width': (gold ? 1.6 : 1.25) * u }, root);
+    }
+    mk('circle', { cx: xe + 1 * u, cy: y, r: 3.2 * u, fill: '#c9c9c9', stroke: '#444', 'stroke-width': .8 * u }, root);
+  }
+  for (let j = 0; j < n; j++) {
+    const key = keys[j], info = infoOf(key), L = info.L, y = yOf(j), cnt = chord ? (cs.get(key) && cs.get(key).nt) : info.nt;
+    // بطاقة اسم الوتر (بدون علامات تحويل)
+    const cw = 28 * u, ch = Math.min(16 * u, step * .8), cxm = 8 * u + NW / 2 - 2 * u;
+    mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * u, fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': u, filter: 'url(#qShadow)' }, root);
+    const t = mk('text', { x: cxm, y: y + 4.2 * u, 'text-anchor': 'middle', 'font-size': 12 * u, 'font-weight': 800, fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
+    t.textContent = baseNm(L);
+    // العرب
+    const nl = (L === 2 || L === 6) ? 3 : 4, nat = nl === 3 ? 3 : 2;
+    const up = info ? Math.max(0, Math.min(nl, nat + info.dev)) : nat;
+    for (let q = 0; q < nl; q++) {
+      const on = q < up, x = lz + q * (LW + LG);
+      const r = mk('rect', { x, y: y - LH / 2, width: LW, height: LH, rx: 2.5 * u, fill: on ? '#2fb457' : '#ff3b30', stroke: on ? '#17692f' : '#9e1209', 'stroke-width': u }, root);
+      if (!on) r.setAttribute('filter', 'url(#qGlow)');
+    }
+    // مستطيل النغمة
+    const g = mk('g', { class: 'qpill' }, root);
+    if (cnt) {
+      const nt = cnt;
+      mk('rect', { x: pillX, y: y - pillH / 2, width: pillW, height: pillH, rx: 5 * u, fill: fillFor(nt), stroke: strokeFor(nt), 'stroke-width': 1.5 * u }, g);
+      lbl(g, nt, pillX + pillW / 2, y, pillW - 10 * u, pillH - 3 * u, chord ? clay : src);
+      const down = () => g.classList.add('pressed'), upf = () => setTimeout(() => g.classList.remove('pressed'), 120);
+      g.addEventListener('pointerdown', down);
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(e => g.addEventListener(e, upf));
+      g.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.button !== 0) return; nt.rect.dispatchEvent(new MouseEvent('click', { bubbles: true })); });
+    }
+  }
+}
+
 // ===== زر التبديل =====
 const tg = mk('g', { id: 'instrumentToggleBtn' }, svg);
 const tgRect = mk('rect', { rx: 18, fill: '#a3d0ec', stroke: '#3ab4e8', 'stroke-width': 2 }, tg);
@@ -11927,14 +12065,15 @@ function svgShown() { const r = svg.getBoundingClientRect(); return r.width > 0 
 function placeToggle() {
   if (!svgShown()) return;   // الرسمة مخفية (مثلاً صفحة تواصل مفتوحة): القياسات صفرية فلا نعيد الترتيب
   const en = window.oudLanguage === 'en';
-  tgText.textContent = organMode ? (en ? 'Organ' : 'أورغ') : (en ? 'Oud' : 'عود');
+  tgText.textContent = !organMode ? (en ? 'Organ' : 'أورغ') : (qanunMode ? (en ? 'Oud' : 'عود') : (en ? 'Qanun' : 'قانون'));
   tgRect.setAttribute('rx', 16);
   layoutBottomRow();
 }
 tg.addEventListener('click', () => {
-  organMode = !organMode;
+  const nxt = !organMode ? 'organ' : (qanunMode ? 'oud' : 'qanun');
+  organMode = nxt !== 'oud'; qanunMode = nxt === 'qanun';
   try {
-    localStorage.setItem('oudInstrument', organMode ? 'organ' : 'oud');
+    localStorage.setItem('oudInstrument', nxt);
     // الأورغ دائماً بـ٤٥ حرفاً (حتى فا جواب). عند الرجوع للعود بوضع ٥ أوتار نصفّر المقام/السلم المحفوظ لأن قد يكون حرفه فوق دو جواب
     if (!organMode && localStorage.getItem('oudStringCountPref') !== '6') {
       localStorage.removeItem('oudArabicSelection'); localStorage.removeItem('oudWesternSelection'); localStorage.removeItem('oudSelectedChordDegree');
@@ -11964,25 +12103,25 @@ function brAdopt(id, L) {
 }
 
 // ===== أيقونات الأزرار (SVG): تعرض ما سيحدث بعد الضغط =====
-const BTN_ICONS = {"oud": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10.6 -4.9 79.5 79.5\"><g transform=\"rotate(45 32 32)\" fill=\"none\" stroke=\"#0a2f52\" stroke-width=\"2.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M32 28C20 33 7 44 7 57C7 68 18 76 32 76C46 76 57 68 57 57C57 44 44 33 32 28Z\" fill=\"#fff\"/><rect x=\"28\" y=\"6\" width=\"8\" height=\"26\" fill=\"#fff\"/><path d=\"M26 6H38V-6C38 -9 36 -10 34 -10H30C28 -10 26 -9 26 -6Z\" fill=\"#fff\"/><path d=\"M23 -3H26M23 3H26M38 -3H41M38 3H41\" stroke-width=\"2.6\"/><polygon points=\"32.0,39.0 33.9,42.1 37.3,40.7 37.0,44.4 40.6,45.2 38.2,48.0 40.6,50.8 37.0,51.6 37.3,55.3 33.9,53.9 32.0,57.0 30.1,53.9 26.7,55.3 27.0,51.6 23.4,50.8 25.8,48.0 23.4,45.2 27.0,44.4 26.7,40.7 30.1,42.1\" fill=\"#fff\" stroke-width=\"2.2\"/><circle cx=\"19\" cy=\"62\" r=\"3.6\"/><circle cx=\"45\" cy=\"62\" r=\"3.6\"/><path d=\"M25 68H39\" stroke-width=\"3\"/><path d=\"M30 -4V68M32 -4V68M34 -4V68\" stroke-width=\"1.2\"/></g></svg>", "organ": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-2 0 76 48\"><rect x=\"2\" y=\"4\" width=\"68\" height=\"40\" rx=\"5\" fill=\"#fff\" stroke=\"OUTC\" stroke-width=\"3.4\"/><g stroke=\"#0a2f52\" stroke-width=\"1.7\" fill=\"none\"><path d=\"M10.5 4V44\"/><path d=\"M19.0 4V44\"/><path d=\"M27.5 4V44\"/><path d=\"M36.0 4V44\"/><path d=\"M44.5 4V44\"/><path d=\"M53.0 4V44\"/><path d=\"M61.5 4V44\"/></g><rect x=\"7.6\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"16.1\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"33.1\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"41.6\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"50.1\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"2\" y=\"4\" width=\"68\" height=\"40\" rx=\"5\" fill=\"none\" stroke=\"OUTC\" stroke-width=\"3.4\"/></svg>", "moon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"4.5 4.3 56.0 56.0\"><path d=\"M40 8A25 25 0 1 0 56 44A20 20 0 0 1 40 8Z\" fill=\"#0a2f52\"/><path d=\"M50 12l1.6 3.6L55 17l-3.4 1.4L50 22l-1.6-3.6L45 17l3.4-1.4Z\" fill=\"#0a2f52\"/></svg>", "sun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"3.0 3.0 58.0 58.0\"><g stroke=\"#0a2f52\" stroke-width=\"4\" stroke-linecap=\"round\"><circle cx=\"32\" cy=\"32\" r=\"11\" fill=\"#0a2f52\"/><path d=\"M32 6v7M32 51v7M6 32h7M51 32h7M13.6 13.6l5 5M45.4 45.4l5 5M13.6 50.4l5-5M45.4 18.6l5-5\"/></g></svg>", "globe": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"4.0 4.0 56.0 56.0\"><g fill=\"none\" stroke=\"#0a2f52\" stroke-width=\"3.4\" stroke-linecap=\"round\"><circle cx=\"32\" cy=\"32\" r=\"25\"/><ellipse cx=\"32\" cy=\"32\" rx=\"11\" ry=\"25\"/><path d=\"M7 32h50M11 18h42M11 46h42\"/></g></svg>", "star": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><path d=\"M32 5L40.2 23.4L60 25.6L45.2 39L49.4 58.6L32 48.6L14.6 58.6L18.8 39L4 25.6L23.8 23.4Z\" fill=\"#f2c14e\" stroke=\"#0a2f52\" stroke-width=\"3.4\" stroke-linejoin=\"round\"/></svg>"};
-function iconUri(n, dk) { let src = BTN_ICONS[n]; if (n === 'organ') src = src.split('OUTC').join(dk ? '#e6eefa' : '#0a2f52'); else if (dk) { src = src.split('#0a2f52').join('#e6eefa'); if (n === 'oud') src = src.split('#fff').join('#33495f'); } return 'data:image/svg+xml;utf8,' + encodeURIComponent(src); }
+const BTN_ICONS = {"oud": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-10.6 -4.9 79.5 79.5\"><g transform=\"rotate(45 32 32)\" fill=\"none\" stroke=\"#0a2f52\" stroke-width=\"2.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M32 28C20 33 7 44 7 57C7 68 18 76 32 76C46 76 57 68 57 57C57 44 44 33 32 28Z\" fill=\"#fff\"/><rect x=\"28\" y=\"6\" width=\"8\" height=\"26\" fill=\"#fff\"/><path d=\"M26 6H38V-6C38 -9 36 -10 34 -10H30C28 -10 26 -9 26 -6Z\" fill=\"#fff\"/><path d=\"M23 -3H26M23 3H26M38 -3H41M38 3H41\" stroke-width=\"2.6\"/><polygon points=\"32.0,39.0 33.9,42.1 37.3,40.7 37.0,44.4 40.6,45.2 38.2,48.0 40.6,50.8 37.0,51.6 37.3,55.3 33.9,53.9 32.0,57.0 30.1,53.9 26.7,55.3 27.0,51.6 23.4,50.8 25.8,48.0 23.4,45.2 27.0,44.4 26.7,40.7 30.1,42.1\" fill=\"#fff\" stroke-width=\"2.2\"/><circle cx=\"19\" cy=\"62\" r=\"3.6\"/><circle cx=\"45\" cy=\"62\" r=\"3.6\"/><path d=\"M25 68H39\" stroke-width=\"3\"/><path d=\"M30 -4V68M32 -4V68M34 -4V68\" stroke-width=\"1.2\"/></g></svg>", "organ": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-2 0 76 48\"><rect x=\"2\" y=\"4\" width=\"68\" height=\"40\" rx=\"5\" fill=\"#fff\" stroke=\"OUTC\" stroke-width=\"3.4\"/><g stroke=\"#0a2f52\" stroke-width=\"1.7\" fill=\"none\"><path d=\"M10.5 4V44\"/><path d=\"M19.0 4V44\"/><path d=\"M27.5 4V44\"/><path d=\"M36.0 4V44\"/><path d=\"M44.5 4V44\"/><path d=\"M53.0 4V44\"/><path d=\"M61.5 4V44\"/></g><rect x=\"7.6\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"16.1\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"33.1\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"41.6\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"50.1\" y=\"4\" width=\"5.8\" height=\"25\" rx=\"1\" fill=\"#0a2f52\"/><rect x=\"2\" y=\"4\" width=\"68\" height=\"40\" rx=\"5\" fill=\"none\" stroke=\"OUTC\" stroke-width=\"3.4\"/></svg>", "qanun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 56\"><g stroke=\"#0a2f52\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M4 6H44L77 50H4Z\" fill=\"#fff\" stroke-width=\"3.4\"/><path d=\"M15 6V50\" stroke-width=\"2.4\"/><g fill=\"#0a2f52\" stroke=\"none\"><rect x=\"6.2\" y=\"10.5\" width=\"5.6\" height=\"3\" rx=\"1\"/><rect x=\"6.2\" y=\"16.9\" width=\"5.6\" height=\"3\" rx=\"1\"/><rect x=\"6.2\" y=\"23.3\" width=\"5.6\" height=\"3\" rx=\"1\"/><rect x=\"6.2\" y=\"29.7\" width=\"5.6\" height=\"3\" rx=\"1\"/><rect x=\"6.2\" y=\"36.1\" width=\"5.6\" height=\"3\" rx=\"1\"/><rect x=\"6.2\" y=\"42.5\" width=\"5.6\" height=\"3\" rx=\"1\"/></g><g stroke-width=\"1.4\"><path d=\"M15 12.0H43.5\"/><path d=\"M15 18.4H48.3\"/><path d=\"M15 24.8H53.1\"/><path d=\"M15 31.200000000000003H57.9\"/><path d=\"M15 37.6H62.7\"/><path d=\"M15 44.0H67.5\"/></g><g fill=\"#0a2f52\" stroke=\"none\"><circle cx=\"45.3\" cy=\"12.0\" r=\"1.8\"/><circle cx=\"50.1\" cy=\"18.4\" r=\"1.8\"/><circle cx=\"54.9\" cy=\"24.8\" r=\"1.8\"/><circle cx=\"59.7\" cy=\"31.200000000000003\" r=\"1.8\"/><circle cx=\"64.5\" cy=\"37.6\" r=\"1.8\"/><circle cx=\"69.3\" cy=\"44.0\" r=\"1.8\"/></g></g></svg>", "moon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"4.5 4.3 56.0 56.0\"><path d=\"M40 8A25 25 0 1 0 56 44A20 20 0 0 1 40 8Z\" fill=\"#0a2f52\"/><path d=\"M50 12l1.6 3.6L55 17l-3.4 1.4L50 22l-1.6-3.6L45 17l3.4-1.4Z\" fill=\"#0a2f52\"/></svg>", "sun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"3.0 3.0 58.0 58.0\"><g stroke=\"#0a2f52\" stroke-width=\"4\" stroke-linecap=\"round\"><circle cx=\"32\" cy=\"32\" r=\"11\" fill=\"#0a2f52\"/><path d=\"M32 6v7M32 51v7M6 32h7M51 32h7M13.6 13.6l5 5M45.4 45.4l5 5M13.6 50.4l5-5M45.4 18.6l5-5\"/></g></svg>", "globe": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"4.0 4.0 56.0 56.0\"><g fill=\"none\" stroke=\"#0a2f52\" stroke-width=\"3.4\" stroke-linecap=\"round\"><circle cx=\"32\" cy=\"32\" r=\"25\"/><ellipse cx=\"32\" cy=\"32\" rx=\"11\" ry=\"25\"/><path d=\"M7 32h50M11 18h42M11 46h42\"/></g></svg>", "star": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><path d=\"M32 5L40.2 23.4L60 25.6L45.2 39L49.4 58.6L32 48.6L14.6 58.6L18.8 39L4 25.6L23.8 23.4Z\" fill=\"#f2c14e\" stroke=\"#0a2f52\" stroke-width=\"3.4\" stroke-linejoin=\"round\"/></svg>"};
+function iconUri(n, dk) { let src = BTN_ICONS[n]; if (n === 'organ') src = src.split('OUTC').join(dk ? '#e6eefa' : '#0a2f52'); if (dk) { src = src.split('#0a2f52').join('#e6eefa'); if (n === 'oud' || n === 'qanun' || n === 'organ') src = src.split('#fff').join('#33495f'); } return 'data:image/svg+xml;utf8,' + encodeURIComponent(src); }
 function applyIcons() {
   const NSV = 'http://www.w3.org/2000/svg';
   const dark = !!(window.oudTheme && window.oudTheme.effective() === 'dark');
-  const map = [[document.getElementById('svgThemeBtn'), dark ? 'sun' : 'moon'], [tg, organMode ? 'oud' : 'organ'], [document.getElementById('langToggleBtn'), 'globe']];
+  const map = [[document.getElementById('svgThemeBtn'), dark ? 'sun' : 'moon'], [tg, !organMode ? 'organ' : (qanunMode ? 'oud' : 'qanun')], [document.getElementById('langToggleBtn'), 'globe']];
   map.forEach(([g, n]) => {
     if (!g) return;
     const r = g.querySelector('rect'), t = g.querySelector('text'); if (!r) return;
     if (t) t.setAttribute('display', 'none');
     g.dataset.icon = n;
     { const en = window.oudLanguage === 'en';
-      const lbl = { moon: en ? 'Dark mode' : 'الوضع الداكن', sun: en ? 'Light mode' : 'الوضع الفاتح', oud: en ? 'Oud' : 'عود', organ: en ? 'Organ' : 'أورغ', globe: en ? 'Language' : 'اللغة' }[n];
+      const lbl = { moon: en ? 'Dark mode' : 'الوضع الداكن', sun: en ? 'Light mode' : 'الوضع الفاتح', oud: en ? 'Oud' : 'عود', organ: en ? 'Organ' : 'أورغ', qanun: en ? 'Qanun' : 'قانون', globe: en ? 'Language' : 'اللغة' }[n];
       g.setAttribute('role', 'button'); g.setAttribute('aria-label', lbl); }
     let im = g.querySelector('image.btnIcon');
     if (!im) { im = document.createElementNS(NSV, 'image'); im.setAttribute('class', 'btnIcon'); im.style.pointerEvents = 'none'; g.appendChild(im); }
     const x = +r.getAttribute('x'), y = +r.getAttribute('y'), w = +r.getAttribute('width'), h = +r.getAttribute('height');
     if (!(w > 0 && h > 0)) return;
-    const asp = (n === 'organ') ? 76 / 48 : 1;
+    const asp = (n === 'organ') ? 76 / 48 : (n === 'qanun' ? 80 / 56 : 1);
     let ih = Math.min(h * (n === 'oud' ? 0.9 : (n === 'organ' ? 0.74 : 0.74)), w * 0.74), iw = ih * asp;
     if (iw > w * 0.78) { iw = w * 0.78; ih = iw / asp; }
     if (im.getAttribute('href') !== iconUri(n, dark)) im.setAttribute('href', iconUri(n, dark));
