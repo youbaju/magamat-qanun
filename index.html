@@ -12081,9 +12081,12 @@ tg.addEventListener('click', () => {
   organMode = nxt !== 'oud'; qanunMode = nxt === 'qanun';
   try {
     localStorage.setItem('oudInstrument', nxt);
-    // الأورغ دائماً بـ٤٥ حرفاً (حتى فا جواب). عند الرجوع للعود بوضع ٥ أوتار نصفّر المقام/السلم المحفوظ لأن قد يكون حرفه فوق دو جواب
+    // الاختيار (مقام/سلم/جذر/كورد) يبقى كما هو بين الآلات الثلاث. عند الرجوع للعود بوضع ٥ أوتار: إن كان جذر الاختيار فوق دو جواب نحوّل العود إلى ٦ أوتار ليظهر بدل مسح الاختيار
     if (!organMode && localStorage.getItem('oudStringCountPref') !== '6') {
-      localStorage.removeItem('oudArabicSelection'); localStorage.removeItem('oudWesternSelection'); localStorage.removeItem('oudSelectedChordDegree');
+      try {
+        const roots = collect(document.getElementById('oudNotesLayer')).filter(n => n.idx === '0').map(n => n.midi);
+        if (roots.length && Math.min.apply(null, roots) > 72) localStorage.setItem('oudStringCountPref', '6');
+      } catch (e2) {}
     }
     sessionStorage.setItem('oudSoft', '1');
   } catch (e) {}
