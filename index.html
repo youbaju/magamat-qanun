@@ -2667,6 +2667,13 @@ window.wireCustomSelect = wireCustomSelect;
 .help-search-result-item:hover, .help-search-result-item:active{background:#382c15;color:#e2bb9f}
 .help-search-noresult{color:#b8ac94}
 html, body{background:#171717}
+#qanunLayer .qwood{fill:#4a3522;stroke:#6e5430}
+#qanunLayer .qlz{fill:#24170e}
+#qanunLayer .qskin{fill:#2b1c12;stroke:#150b05}
+#qanunLayer .qcard{fill:#4d3d2a;stroke:#7a5c36}
+#qanunLayer .qcardtxt{fill:#f3e6c8}
+#organLayer .okey:not(.blk).off rect{fill:#3a3f46;stroke:#6b7078}
+#organLayer .okey.off .obase{fill:#d3d7db}
 .social-page-toggle{background:#171717;color:#ebe4e0}
 .social-page-toggle:hover{background:#0d222e}
 .site-tabs{background:#171717;border-bottom:1px solid #353535}
@@ -11992,10 +11999,10 @@ function renderQanun() {
   const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
   const yOf = j => yBot - j * step;
   const NW = 40 * u, lz = 8 * u + NW, LW = 15 * u, LG = 5 * u, LH = Math.min(13 * u, step * .8), div = lz + 4 * LW + 3 * LG + 8 * u;
-  mk('polygon', { points: `0,${top} ${RT},${top} ${RB},${bot - CUT} ${RB},${bot} 0,${bot}`, fill: 'url(#qWood)', stroke: '#8a6a38', 'stroke-width': 3.5 * u, 'stroke-linejoin': 'round' }, root);
+  mk('polygon', { points: `0,${top} ${RT},${top} ${RB},${bot - CUT} ${RB},${bot} 0,${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: '#8a6a38', 'stroke-width': 3.5 * u, 'stroke-linejoin': 'round' }, root);
   const i6 = 6 * u;
-  mk('polygon', { points: `${i6},${top + i6} ${div},${top + i6} ${div},${bot - i6} ${i6},${bot - i6}`, fill: '#4a2f1c' }, root);
-  mk('polygon', { points: `${div + 3 * u},${top + i6} ${RT - i6 * 1.3},${top + i6} ${RB - i6 * 2.2},${bot - CUT} ${RB - i6 * 2.2},${bot - i6} ${div + 3 * u},${bot - i6}`, fill: 'url(#qSkin)', stroke: '#3c2412', 'stroke-width': u }, root);
+  mk('polygon', { points: `${i6},${top + i6} ${div},${top + i6} ${div},${bot - i6} ${i6},${bot - i6}`, class: 'qlz', fill: '#4a2f1c' }, root);
+  mk('polygon', { points: `${div + 3 * u},${top + i6} ${RT - i6 * 1.3},${top + i6} ${RB - i6 * 2.2},${bot - CUT} ${RB - i6 * 2.2},${bot - i6} ${div + 3 * u},${bot - i6}`, class: 'qskin', fill: 'url(#qSkin)', stroke: '#3c2412', 'stroke-width': u }, root);
   const div2 = lz - 4 * u;
   [div2, div].forEach((x, i) => mk('line', { x1: x, y1: top, x2: x, y2: bot, stroke: '#8a6a38', 'stroke-width': (i ? 3.5 : 2.5) * u }, root));
   const pillW = 68 * u, pillX = div + 8 * u, pillH = Math.min(20 * u, step * .85);
@@ -12026,8 +12033,8 @@ function renderQanun() {
     const key = keys[j], info = infoOf(key), L = info.L, y = yOf(j), cnt = chord ? (cs.get(key) && cs.get(key).nt) : info.nt;
     // بطاقة اسم الوتر (بدون علامات تحويل)
     const cw = 28 * u, ch = Math.min(16 * u, step * .8), cxm = 8 * u + NW / 2 - 2 * u;
-    mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * u, fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': u, filter: 'url(#qShadow)' }, root);
-    const t = mk('text', { x: cxm, y: y + 4.2 * u, 'text-anchor': 'middle', 'font-size': 12 * u, 'font-weight': 800, fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
+    mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * u, class: 'qcard', fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': u, filter: 'url(#qShadow)' }, root);
+    const t = mk('text', { x: cxm, y: y + 4.2 * u, 'text-anchor': 'middle', 'font-size': 12 * u, 'font-weight': 800, class: 'qcardtxt', fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
     t.textContent = baseNm(L);
     // العرب
     const nl = (L === 2 || L === 6) ? 3 : 4, nat = nl === 3 ? 3 : 2;
