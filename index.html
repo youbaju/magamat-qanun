@@ -11933,8 +11933,8 @@ function doRender() {
 const qLayer = mk('g', { id: 'qanunLayer' });
 const qDefs = mk('defs', {}, qLayer);
 { const lg = (id, x2, y2, stops) => { const g = mk('linearGradient', { id, x1: 0, y1: 0, x2, y2 }, qDefs); stops.forEach(s => mk('stop', { offset: s[0], 'stop-color': s[1] }, g)); };
-  lg('qWood', 1, 1, [['0', '#ecbe78'], ['.5', '#d9a85f'], ['1', '#ecbe78']]);
-  lg('qSkin', 1, 0, [['0', '#8a6a52'], ['1', '#6f4a2f']]);
+  lg('qWood', 1, 1, [['0', '#7a5230'], ['.5', '#6a4527'], ['1', '#7a5230']]);
+  lg('qSkin', 1, 0, [['0', '#4a3022'], ['1', '#35200f']]);
   lg('qCard', 0, 1, [['0', '#fbf0d6'], ['1', '#e6cf9f']]);
   lg('qBlue', 0, 1, [['0', '#5b97ea'], ['1', '#2b6fc9']]);
   lg('qRed', 0, 1, [['0', '#ef6a6a'], ['1', '#d64545']]);
@@ -11999,7 +11999,7 @@ function renderQanun() {
   const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
   const yOf = j => yBot - j * step;
   const NW = 40 * u, lz = 8 * u + NW, LW = 15 * u, LG = 5 * u, LH = Math.min(13 * u, step * .8), div = lz + 4 * LW + 3 * LG + 8 * u;
-  mk('polygon', { points: `0,${top} ${RT},${top} ${RB},${bot - CUT} ${RB},${bot} 0,${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: '#8a6a38', 'stroke-width': 3.5 * u, 'stroke-linejoin': 'round' }, root);
+  mk('polygon', { points: `0,${top} ${RT},${top} ${RB},${bot - CUT} ${RB},${bot} 0,${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: '#4a2f17', 'stroke-width': 3.5 * u, 'stroke-linejoin': 'round' }, root);
   const i6 = 6 * u;
   mk('polygon', { points: `${i6},${top + i6} ${div},${top + i6} ${div},${bot - i6} ${i6},${bot - i6}`, class: 'qlz', fill: '#4a2f1c' }, root);
   mk('polygon', { points: `${div + 3 * u},${top + i6} ${RT - i6 * 1.3},${top + i6} ${RB - i6 * 2.2},${bot - CUT} ${RB - i6 * 2.2},${bot - i6} ${div + 3 * u},${bot - i6}`, class: 'qskin', fill: 'url(#qSkin)', stroke: '#3c2412', 'stroke-width': u }, root);
@@ -12025,7 +12025,7 @@ function renderQanun() {
     const key = keys[j], L = ((key % 7) + 7) % 7, y = yOf(j), xe = skinX(y) - 1.5 * u, gold = false;
     for (const d of [-3.5, 0, 3.5]) {
       if (gold) mk('line', { x1: 6 * u, y1: y + d * u, x2: xe, y2: y + d * u, stroke: '#2a1306', 'stroke-width': 4.2 * u, opacity: .9 }, root);
-      mk('line', { x1: 6 * u, y1: y + d * u, x2: xe, y2: y + d * u, stroke: gold ? '#fbe08c' : '#e8ebee', 'stroke-width': (gold ? 1.6 : 1.25) * u }, root);
+      mk('line', { x1: 6 * u, y1: y + d * u, x2: xe, y2: y + d * u, stroke: gold ? '#fbe08c' : '#f6f8fa', 'stroke-width': (gold ? 1.6 : 1.5) * u }, root);
     }
     mk('circle', { cx: xe + 1 * u, cy: y, r: 3.2 * u, fill: '#c9c9c9', stroke: '#444', 'stroke-width': .8 * u }, root);
   }
