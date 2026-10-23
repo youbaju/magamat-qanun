@@ -12002,7 +12002,7 @@ function renderQanun() {
   const padY = 22, step = n > 1 ? Math.min((HQ - 2 * padY) / (n - 1), 40 * u) : 0;
   const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
   const yOf = j => yBot - j * step;
-  const NW = 40 * u, lz = 8 * u + NW, LW = 15 * u, LG = 5 * u, LH = Math.min(13 * u, step * .8), div = lz + 4 * LW + 3 * LG + 8 * u;
+  const NW = 40 * u, lz = 8 * u + NW, LW = 15 * u, LG = 5 * u, LH = Math.min(15 * u, step * .85), div = lz + 4 * LW + 3 * LG + 8 * u;
   mk('polygon', { points: `0,${top} ${RT},${top} ${RB},${bot - CUT} ${RB},${bot} 0,${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: '#4a2f17', 'stroke-width': 3.5 * u, 'stroke-linejoin': 'round' }, root);
   const i6 = 6 * u;
   mk('polygon', { points: `${i6},${top + i6} ${div},${top + i6} ${div},${bot - i6} ${i6},${bot - i6}`, class: 'qlz', fill: '#4a2f1c' }, root);
@@ -12047,6 +12047,11 @@ function renderQanun() {
       const on = q < up, x = lz + q * (LW + LG);
       const r = mk('rect', { x, y: y - LH / 2, width: LW, height: LH, rx: 2.5 * u, fill: on ? '#2fb457' : '#ff3b30', stroke: on ? '#17692f' : '#9e1209', 'stroke-width': u }, root);
       if (!on) r.setAttribute('filter', 'url(#qGlow)');
+      // سهم: للأعلى = مرفوعة، لليمين (اتجاه الوتر) = نازلة
+      const ax = x + LW / 2, ay = y, h = Math.min(LW, LH) * .3;
+      const d = on ? `M${ax} ${ay + h} V${ay - h} M${ax - h * .75} ${ay - h * .1} L${ax} ${ay - h} L${ax + h * .75} ${ay - h * .1}`
+                   : `M${ax - h} ${ay} H${ax + h} M${ax + h * .1} ${ay - h * .75} L${ax + h} ${ay} L${ax + h * .1} ${ay + h * .75}`;
+      mk('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 1.9 * u, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pointer-events': 'none' }, root);
     }
     // مستطيل النغمة
     const g = mk('g', { class: 'qpill' }, root);
