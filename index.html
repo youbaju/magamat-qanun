@@ -2672,8 +2672,11 @@ html, body{background:#171717}
 #qanunLayer .qskin{fill:#2b1c12;stroke:#150b05}
 #qanunLayer .qcard{fill:#4d3d2a;stroke:#7a5c36}
 #qanunLayer .qcardtxt{fill:#f3e6c8}
-#organLayer .okey:not(.blk).off rect{fill:#3a3f46;stroke:#6b7078}
-#organLayer .okey.off .obase{fill:#d3d7db}
+#organLayer .okey:not(.blk).off rect{fill:#6f7782;stroke:#cdd3db;stroke-width:1.6}
+#organLayer .okey.blk.off rect{fill:#3b414a;stroke:#d3d9e1;stroke-width:2}
+#organLayer .okey.off .obase{fill:#fff}
+#organLayer .okey:not(.off){filter:brightness(1.18) saturate(1.15)}
+#organLayer .okey:not(.off) rect{stroke:#e3e8ee;stroke-width:1.6}
 .social-page-toggle{background:#171717;color:#ebe4e0}
 .social-page-toggle:hover{background:#0d222e}
 .site-tabs{background:#171717;border-bottom:1px solid #353535}
@@ -11704,6 +11707,7 @@ svg#shared-oudSvg #noteSystemToggleBtn.ns-off,svg#shared-oudSvg #noteSystemToggl
 #shared-oudSvg.organ-mode #stringCountBtn *{pointer-events:none !important;cursor:default !important}
 #organLayer .okey{cursor:pointer;transition:transform .06s}
 #organLayer .okey.off{cursor:default}
+#organLayer .okey:not(.off) rect{stroke:#e3e8ee;stroke-width:1.6}
 svg#shared-oudSvg #organLayer .okey.off rect{pointer-events:none}
 svg#shared-oudSvg #organLayer .okey.blk.off rect{pointer-events:auto}
 #organLayer .okey.pressed{transform:translateY(5px);filter:brightness(.88) drop-shadow(0 0 4px #ffd54a)}
