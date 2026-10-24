@@ -12291,6 +12291,7 @@ window.addEventListener('load', () => { placeToggle(); render(); });
 // ===== تصفية قائمة الحروف بالأورغ: نخفي أي حرف تتجاوز نغمات المقام معه آخر مفتاح (فا ٦) =====
 // حروف تضيع فيها نغمة على القانون (عدد العرب الفعلي لكل وتر): تُخفى من القائمة عند القانون — نتيجة فحص شامل لكل المقامات والدرجات
 const QANUN_BAD = {"الراست": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "السوزناك": ["miHafDiaz", "miHafDiazJawab"], "السوزدلار": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "النيرز راست": ["miHafDiaz", "miHafDiazJawab"], "راست البشاير": ["miHafDiaz", "miHafDiazJawab"], "الماهور": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الدلنشين": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "الزنجران": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "النهاوند ذو الحساس": ["miHafDiaz", "miHafDiazJawab"], "النهاوند الكردي": ["miHafDiaz", "miHafDiazJawab"], "العشاق المصري": ["miHafDiaz", "miHafDiazJawab"], "الطرز الجديد": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الطرز الجديد شكل آخر": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "النهاوند المرصع": ["miHafDiaz", "miHafDiazJawab"], "النهاوند الكبير": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "الفرح فزا": ["miHafDiaz", "miHafDiazJawab"], "السلطاني يكاه": ["miHafDiaz", "miHafDiazJawab"], "السيكاه": ["doDiaz", "doDiazJawab"], "السيكاه مايا": ["doDiaz", "doDiazJawab"], "صبا البوسليك": ["miHafDiaz", "miHafDiazJawab"], "النوا أثر": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "النكريز": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "البسنديده": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "العجم عشيران": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الشوق أفزا": ["laHafDiaz", "reHafDiaz", "miHafDiaz", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الجهاركاه": ["laHafDiaz", "reHafDiaz", "miHafDiaz", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "العجم المرصع": ["solHalfDiaz", "laHafDiaz", "doDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "doDiazJawab", "reHafDiazJawab", "miHafDiazJawab"]};
+const HARF_DROP = ['doDiaz','doDiazJawab','reHafDiaz','reHafDiazJawab','miHafDiaz','miHafDiazJawab','solHalfDiaz','solHalfDiazJawab','laHafDiaz','laHafDiazJawab'];
 function filterRoots() {
   if (!organMode || !window._maqamIntervals || !window._harfList) return;
   const ms = document.getElementById('maqam-select'), hs = document.getElementById('harf-select');
@@ -12301,11 +12302,16 @@ function filterRoots() {
     const i = window._harfList.indexOf(o.value);
     if (i < 0) return;
     let hide = (55 + Math.ceil((i + sum) / 2) > MIDI_HI);
+    if (!hide && qanunMode && HARF_DROP.indexOf(o.value) >= 0) hide = true;   // حروف محذوفة من قائمة القانون فقط (لا تتسع لها أوتاره)
     o.style.display = hide ? 'none' : '';
   });
   if (qanunMode && hs.options[hs.selectedIndex] && hs.options[hs.selectedIndex].style.display === 'none') {
-    const vis = Array.from(hs.options).filter(o => o.style.display !== 'none');
-    if (vis.length) { const cur = hs.selectedIndex; let best = vis[0]; vis.forEach(o => { if (Math.abs(o.index - cur) < Math.abs(best.index - cur)) best = o; }); hs.value = best.value; hs.dispatchEvent(new Event('change', { bubbles: true })); }
+    // الحرف المختار غير متاح على القانون: نعود للوضع الافتراضي (الراست، الدو)
+    const r1 = document.getElementById('r1b'); if (r1 && !r1.checked) { r1.checked = true; r1.dispatchEvent(new Event('change', { bubbles: true })); }
+    setTimeout(() => {
+      const op = Array.from(ms.options).find(x => x.textContent.trim() === 'الراست'); if (op) { ms.value = op.value; ms.dispatchEvent(new Event('change', { bubbles: true })); }
+      setTimeout(() => { hs.value = 'do'; hs.dispatchEvent(new Event('change', { bubbles: true })); if (hs._customSelectApi) hs._customSelectApi.refresh(); }, 120);
+    }, 120);
   }
   if (hs._customSelectApi) hs._customSelectApi.refresh();
 }
