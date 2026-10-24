@@ -12301,7 +12301,6 @@ function filterRoots() {
     const i = window._harfList.indexOf(o.value);
     if (i < 0) return;
     let hide = (55 + Math.ceil((i + sum) / 2) > MIDI_HI);
-    if (!hide && qanunMode) { const mo = ms.options[ms.selectedIndex], bad = mo && QANUN_BAD[mo.textContent]; hide = !!(bad && bad.indexOf(o.value) >= 0); }
     o.style.display = hide ? 'none' : '';
   });
   if (qanunMode && hs.options[hs.selectedIndex] && hs.options[hs.selectedIndex].style.display === 'none') {
