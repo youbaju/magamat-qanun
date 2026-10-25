@@ -12069,7 +12069,7 @@ function renderQanun() {
   const padY = 22, step = n > 1 ? Math.min((HQ - 2 * padY) / (n - 1), 40 * u) : 0;
   const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
   const yOf = j => yBot - j * step;
-  const LW = 56 * k, LG = 8 * k, LH = Math.min(44 * k, step * .88), mg = 18 * k;
+  const LW = 42 * k, LG = 10 * k, LH = Math.min(32 * k, step * .72), mg = 18 * k;
   const cardW = 68 * k, cardH = Math.min(38 * k, step * .85), cgap = 84 * k;
   const ZW = ws + mg + slope * Math.max(LH, cardH) + cardW + cgap + 4 * (LW + LG) + mg;   // عرض منطقة العرب (أفقياً): اسم الوتر ثم العرب
   const pillW = 96 * k, pillH = Math.min(32 * k, step * .8), pillX = rightEdge - 56 * k - pillW, Dx = pillX - 14 * k;   // المستطيلات الزرقاء قريبة من العرب؛ Dx حدّ منطقة العرب (تشمل كل المساحة قبلها)
@@ -12077,10 +12077,34 @@ function renderQanun() {
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Wb},${top} ${Wb},${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: 'none' }, root);
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Dx},${top} ${Dx - xt},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);
   mk('line', { x1: Dx - xt, y1: bot, x2: Dx, y2: top, stroke: '#e6c785', 'stroke-width': 2.5 * k, class: 'qdiv' }, root);
+  // اهتزاز وتر القانون عند العزف (موجة تتلاشى كالعود)
+  const rowLines = [];
+  window._qVib = window._qVib || {};
+  const vib = (j, t00) => {
+    const ls = rowLines[j]; if (!ls || !ls.length || ls[0]._vib) return;
+    ls[0]._vib = true;
+    const ns = 'http://www.w3.org/2000/svg', t0 = t00 || performance.now(), DUR = 650, AMP = 4.5 * k;
+    window._qVib[keys[j]] = t0;
+    const paths = ls.map(l => { const p = document.createElementNS(ns, 'path'); p.setAttribute('fill', 'none'); p.setAttribute('stroke', l.getAttribute('stroke')); p.setAttribute('stroke-width', l.getAttribute('stroke-width')); p.setAttribute('stroke-linecap', 'round'); p.setAttribute('pointer-events', 'none'); l.parentNode.insertBefore(p, l); l.style.display = 'none'; return p; });
+    const done = () => { paths.forEach(p => p.remove()); ls.forEach(l => { l.style.display = ''; }); ls[0]._vib = false; };
+    const step_ = (now) => {
+      const e = now - t0;
+      if (e >= DUR || !paths[0].isConnected) { done(); return; }
+      const amp = AMP * Math.pow(1 - e / DUR, 1.6), ph = e / 1000 * 2 * Math.PI * 9;
+      paths.forEach((p, i) => {
+        const l = ls[i], x1 = +l.getAttribute('x1'), x2 = +l.getAttribute('x2'), y0 = +l.getAttribute('y1'); let d = '';
+        for (let n_ = 0; n_ <= 40; n_++) { const f = n_ / 40, x = x1 + (x2 - x1) * f; d += (n_ ? 'L' : 'M') + x.toFixed(1) + ' ' + (y0 + amp * Math.sin(Math.PI * f) * Math.sin(ph + i * .4)).toFixed(2) + ' '; }
+        p.setAttribute('d', d);
+      });
+      requestAnimationFrame(step_);
+    };
+    requestAnimationFrame(step_);
+  };
   // الأوتار (٣ لكل نغمة): من الحافة المائلة (تحت العرب) إلى آخر القانون
   for (let j = 0; j < n; j++) {
-    const y = yOf(j);
-    for (const d of [-3.5, 0, 3.5]) mk('line', { x1: xs(y + d * k) + ws, y1: y + d * k, x2: rightEdge, y2: y + d * k, stroke: '#eceff1', 'stroke-width': 1.5 * k, opacity: .92 }, root);
+    const y = yOf(j), odd = j % 2 === 1;   // ألوان متبادلة للأوتار لتسهيل تتبّع كل وتر من اسمه إلى عربه ومستطيله
+    rowLines[j] = [];
+    for (const d of [-3.5, 0, 3.5]) rowLines[j].push(mk('line', { x1: xs(y + d * k) + ws, y1: y + d * k, x2: rightEdge, y2: y + d * k, stroke: odd ? '#43d9ff' : '#ffffff', 'stroke-width': 1.9 * k, opacity: 1 }, root));
   }
   // الإطار الأيمن (٥ نوافذ والخط العمودي يمر بمنتصف دوائرها)
   const FY = -BW / 2, FH = bot - top + BW;
@@ -12110,6 +12134,7 @@ function renderQanun() {
   };
   const fillFor = nt => nt.fill === '#ffe100' ? 'url(#qYel)' : (nt.fill === '#1B7A3D' ? 'url(#qGrn)' : (nt.cur ? 'url(#qRed)' : 'url(#qBlue)'));
   const strokeFor = nt => nt.fill === '#ffe100' ? '#6b5300' : (nt.fill === '#1B7A3D' ? '#04230f' : (nt.cur ? '#5e1414' : '#06214a'));
+  const newYel = new Set();
   for (let j = 0; j < n; j++) {
     const key = keys[j], info = infoOf(key), L = info.L, y = yOf(j), cnt = chord ? (cs.get(key) && cs.get(key).nt) : info.nt;
     // العرب (بجانب الحافة المائلة داخل منطقتها الخاصة)
@@ -12140,9 +12165,12 @@ function renderQanun() {
       const down = () => g.classList.add('pressed'), upf = () => setTimeout(() => g.classList.remove('pressed'), 120);
       g.addEventListener('pointerdown', down);
       ['pointerup', 'pointerleave', 'pointercancel'].forEach(e => g.addEventListener(e, upf));
-      g.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.button !== 0) return; nt.rect.dispatchEvent(new MouseEvent('click', { bubbles: true })); });
+      g.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.button !== 0) return; vib(j); nt.rect.dispatchEvent(new MouseEvent('click', { bubbles: true })); });
+      if (nt.fill === '#ffe100') { newYel.add(key); if (!(window._qPrevYel && window._qPrevYel.has(key))) vib(j); }   // نغمة أُضيئت أثناء التشغيل: يهتز وترها
     }
   }
+  window._qPrevYel = newYel;
+  { const now0 = performance.now(); for (let j = 0; j < n; j++) { const t1 = window._qVib[keys[j]]; if (t1 && now0 - t1 < 650) vib(j, t1); } }   // يكمل اهتزاز وتر بدأ قبل إعادة الرسم
 }
 
 // ===== زر التبديل =====
