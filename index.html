@@ -12127,7 +12127,8 @@ function renderQanun() {
       mk('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 3 * k, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pointer-events': 'none' }, root);
     }
     // بطاقة اسم الوتر (بدون علامات تحويل) قبل العرب داخل منطقة العرب
-    const pillX = Math.max(xs(yOf(n - 1) - pillH / 2) + ZW + 22 * k, rightEdge - 14 * k - pillW);   // المستطيلات الزرقاء في أقصى اليمين قرب الإطار (وتبتعد عن الخط الفاصل إن ضاق المكان)   // كل المستطيلات الزرقاء في عمود واحد تحت أولها (بعد خط منطقة العرب في الوتر الأعلى)
+    const topLeverEnd = xs(yOf(n - 1)) + ws + mg + slope * Math.max(LH, cardH) / 2 + cardW + cgap + 4 * (LW + LG) - LG;   // نهاية عرب الوتر الأعلى
+    const pillX = Math.max((topLeverEnd + rightEdge) / 2 - pillW / 2, xs(yOf(n - 1) - pillH / 2) + ZW + 22 * k);   // المستطيلات الزرقاء في منتصف المسافة بين العرب والإطار الأيمن
     const cw = cardW, ch = cardH, cxm = cx0 + cw / 2;
     mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * k, class: 'qcard', fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': k, filter: 'url(#qShadow)' }, root);
     const t = mk('text', { x: cxm, y: y + 8.6 * k, 'text-anchor': 'middle', 'font-size': 25 * k, 'font-weight': 800, class: 'qcardtxt', fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
