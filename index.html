@@ -12074,10 +12074,11 @@ function renderQanun() {
   const LW = 42 * k, LG = 10 * k, LH = Math.min(32 * k, step * .72), mg = 18 * k;
   const cardW = 68 * k, cardH = Math.min(38 * k, step * .85), cgap = 84 * k;
   const ZW = ws + mg + slope * Math.max(LH, cardH) + cardW + cgap + 4 * (LW + LG) + mg;   // عرض منطقة العرب (أفقياً): اسم الوتر ثم العرب
-  const pillW = 96 * k, pillH = Math.min(32 * k, step * .8), pillX = rightEdge - 56 * k - pillW, Dx = pillX - 14 * k;   // المستطيلات الزرقاء قريبة من العرب؛ Dx حدّ منطقة العرب (تشمل كل المساحة قبلها)
+  const pillW = 118 * k, pillH = Math.min(37 * k, step * .9), pillX = rightEdge - 56 * k - pillW, Dx = pillX - 14 * k;   // المستطيلات الزرقاء قريبة من العرب؛ Dx حدّ منطقة العرب (تشمل كل المساحة قبلها)
   // جسم القانون (مثلث قائم مقطوع) + منطقة العرب + الخط الفاصل
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Wb},${top} ${Wb},${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: 'none' }, root);
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Dx},${top} ${Dx - xt},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);
+  mk('polygon', { points: `${Dx - xt},${bot} ${Dx},${top} ${rightEdge},${top} ${rightEdge},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);   // منطقة المستطيلات الزرقاء بخشب فاتح
   [['#24120a', 12], ['#a8773f', 9], ['#c79a62', 2.5]].forEach((c, i) => mk('line', { x1: Dx - xt, y1: bot, x2: Dx, y2: top, stroke: c[0], 'stroke-width': c[1] * k, 'stroke-linecap': 'butt', class: 'qdv' + i }, root));   // الخط الفاصل: حد داكن + ذهبي ساطع + لمعة
   // اهتزاز وتر القانون عند العزف (موجة تتلاشى كالعود)
   const rowLines = [];
@@ -12162,8 +12163,9 @@ function renderQanun() {
     const g = mk('g', { class: 'qpill' }, root);
     if (cnt) {
       const nt = cnt;
-      mk('rect', { x: pillX, y: y - pillH / 2, width: pillW, height: pillH, rx: 5 * k, fill: fillFor(nt), stroke: strokeFor(nt), 'stroke-width': 1.5 * k }, g);
-      lbl(g, nt, pillX + pillW / 2, y, pillW - 10 * k, pillH - 3 * k, chord ? clay : src);
+      const pillXr = Dx - (y - pillH / 2 - top) * slope + 6 * k * Math.sqrt(1 + slope * slope) + 16 * k;   // المستطيل يتبع ميل الخط الفاصل بفراغ ثابت عنه
+      mk('rect', { x: pillXr, y: y - pillH / 2, width: pillW, height: pillH, rx: 5 * k, fill: fillFor(nt), stroke: strokeFor(nt), 'stroke-width': 1.5 * k }, g);
+      lbl(g, nt, pillXr + pillW / 2, y, pillW - 10 * k, pillH - 3 * k, chord ? clay : src);
       const down = () => g.classList.add('pressed'), upf = () => setTimeout(() => g.classList.remove('pressed'), 120);
       g.addEventListener('pointerdown', down);
       ['pointerup', 'pointerleave', 'pointercancel'].forEach(e => g.addEventListener(e, upf));
