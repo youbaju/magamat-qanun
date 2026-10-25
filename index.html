@@ -2672,8 +2672,17 @@ window.wireCustomSelect = wireCustomSelect;
 .help-search-result-item:hover, .help-search-result-item:active{background:#382c15;color:#e2bb9f}
 .help-search-noresult{color:#b8ac94}
 html, body{background:#171717}
-#qanunLayer .qwood{fill:#4a3522;stroke:#6e5430}
-#qanunLayer .qlz{fill:#24170e}
+#qanunLayer .qwood{fill:#3a281a;stroke:none}
+#qanunLayer .qlz{fill:#4a3320;opacity:1}
+#qanunLayer .qdiv{stroke:#a88b55}
+#qanunLayer .qfr{fill:#33220f;stroke:#0e0803}
+#qanunLayer .qwin{fill:#5a4026;stroke:#0e0803}
+#qanunLayer .qwin2{fill:#6e5130;opacity:.8}
+#qanunLayer .qstrip{fill:#7a5a35;stroke:#4a3320}
+#qanunLayer .qcirc{fill:#9a7444;stroke:#4a3320}
+#qanunLayer .qb0{stroke:#0e0803}
+#qanunLayer .qb1{stroke:#6b4a29}
+#qanunLayer .qb2{stroke:#8a6238}
 #qanunLayer .qskin{fill:#2b1c12;stroke:#150b05}
 #qanunLayer .qcard{fill:#4d3d2a;stroke:#7a5c36}
 #qanunLayer .qcardtxt{fill:#f3e6c8}
@@ -11086,8 +11095,9 @@ document.getElementById('shared-playBtn').onclick = async function() {
       <h4>القانون</h4>
       <p>🔹 <strong>الأوتار والعرب:</strong> كل وتر عليه عرب (مفاتيح صغيرة) ترفع النغمة أو تخفضها بمقدار ربع تون لكل عربة: ٤ عرب لكل وتر، و٣ للمي والسي. في الوضع الطبيعي تكون عربتان مرفوعتان في الأوتار ذات الأربع، وكل عرب المي والسي مرفوعة.</p>
       <p>🔹 <strong>شكل العرب:</strong> العربة <strong>المرفوعة</strong> خضراء بسهم أبيض للأعلى، والعربة <strong>النازلة</strong> حمراء بسهم أبيض لليمين (باتجاه الأوتار). بذلك ترى كيف تضبط عربك لكل نغمة من المقام.</p>
-      <p>🔹 <strong>النغمات:</strong> كل نغمة تقع على وتر اسمها؛ وإن تجاوزت مدى عرب وترها انتقلت إلى الوتر المجاور (مثل «دو دييز ونصف» التي تُعزف على الري). اضغط أي وتر مضاء لتسمع نغمته.</p>
-      <p>🔹 <strong>حروف غير متاحة:</strong> بعض الحروف (مي نصف دييز، لا نصف دييز، ري نصف دييز، صول نصف دييز، دو دييز) لا تتسع لها أوتار القانون، فتختفي من قائمة الحروف عند القانون. إن كان اختيارك الحالي منها عند الانتقال للقانون يعرض التطبيق الراست على الدو، ثم يعيد اختيارك الأصلي حين ترجع للعود أو الأورغ.</p>
+      <p>🔹 <strong>تخطيط القانون:</strong> العرب في منطقة خاصة بجانب الحافة المائلة (جهة الملاوي)، وبجانبها <strong>المستطيلات الزرقاء</strong> التي تعرض النغمات لتقارن بين النغمة وعربها في الوتر نفسه، وأسماء الأوتار بجانب الحافة اليمنى لمنطقة العزف قبل الإطار ذي النوافذ.</p>
+      <p>🔹 <strong>النغمات:</strong> كل نغمة تقع على وتر اسمها؛ وإن تجاوزت مدى عرب وترها انتقلت إلى الوتر المجاور (مثل «دو دييز ونصف» التي تُعزف على الري). اضغط أي مستطيل أزرق لتسمع نغمته.</p>
+      <p>🔹 <strong>حروف غير متاحة في بعض المقامات:</strong> بعض الحروف لا تناسب مقاماً معيناً على القانون (نغمة لا تجد وتراً مناسباً، أو وتر واحد يحتاج وضعي عرب مختلفين في المقام نفسه)، فتختفي من قائمة الحروف عند القانون <strong>في ذلك المقام فقط</strong>، ويبقى الحرف ظاهراً في المقامات التي لا مشكلة فيها. إن كان اختيارك الحالي منها عند الانتقال للقانون أو تغيير المقام يعرض التطبيق الراست على الدو، ثم يعيد اختيارك الأصلي حين ترجع للعود أو الأورغ. أما العود والأورغ فيعرضان كل الحروف دائماً.</p>
     </div>
 
     <div class="help-section" id="help-sec-ar-2">
@@ -11321,8 +11331,9 @@ document.getElementById('shared-playBtn').onclick = async function() {
 
       <p>🔹 <strong>الأوتار والعرب:</strong> كل وتر عليه عرب (مفاتيح صغيرة) ترفع النغمة أو تخفضها بمقدار ربع تون لكل عربة: ٤ عرب لكل وتر، و٣ للمي والسي. في الوضع الطبيعي تكون عربتان مرفوعتان في الأوتار ذات الأربع، وكل عرب المي والسي مرفوعة.</p>
       <p>🔹 <strong>شكل العرب:</strong> العربة <strong>المرفوعة</strong> خضراء بسهم أبيض للأعلى، والعربة <strong>النازلة</strong> حمراء بسهم أبيض لليمين (باتجاه الأوتار). بذلك ترى كيف تضبط عربك لكل نغمة من المقام.</p>
-      <p>🔹 <strong>النغمات:</strong> كل نغمة تقع على وتر اسمها؛ وإن تجاوزت مدى عرب وترها انتقلت إلى الوتر المجاور (مثل «دو دييز ونصف» التي تُعزف على الري). اضغط أي وتر مضاء لتسمع نغمته.</p>
-      <p>🔹 <strong>حروف غير متاحة:</strong> بعض الحروف (مي نصف دييز، لا نصف دييز، ري نصف دييز، صول نصف دييز، دو دييز) لا تتسع لها أوتار القانون، فتختفي من قائمة الحروف عند القانون. إن كان اختيارك الحالي منها عند الانتقال للقانون يعرض التطبيق الراست على الدو، ثم يعيد اختيارك الأصلي حين ترجع للعود أو الأورغ.</p>
+      <p>🔹 <strong>تخطيط القانون:</strong> العرب في منطقة خاصة بجانب الحافة المائلة (جهة الملاوي)، وبجانبها <strong>المستطيلات الزرقاء</strong> التي تعرض النغمات لتقارن بين النغمة وعربها في الوتر نفسه، وأسماء الأوتار بجانب الحافة اليمنى لمنطقة العزف قبل الإطار ذي النوافذ.</p>
+      <p>🔹 <strong>النغمات:</strong> كل نغمة تقع على وتر اسمها؛ وإن تجاوزت مدى عرب وترها انتقلت إلى الوتر المجاور (مثل «دو دييز ونصف» التي تُعزف على الري). اضغط أي مستطيل أزرق لتسمع نغمته.</p>
+      <p>🔹 <strong>حروف غير متاحة في بعض المقامات:</strong> بعض الحروف لا تناسب مقاماً معيناً على القانون (نغمة لا تجد وتراً مناسباً، أو وتر واحد يحتاج وضعي عرب مختلفين في المقام نفسه)، فتختفي من قائمة الحروف عند القانون <strong>في ذلك المقام فقط</strong>، ويبقى الحرف ظاهراً في المقامات التي لا مشكلة فيها. إن كان اختيارك الحالي منها عند الانتقال للقانون أو تغيير المقام يعرض التطبيق الراست على الدو، ثم يعيد اختيارك الأصلي حين ترجع للعود أو الأورغ. أما العود والأورغ فيعرضان كل الحروف دائماً.</p>
     </div>
 
 
@@ -11396,8 +11407,9 @@ document.getElementById('shared-playBtn').onclick = async function() {
       <h4>Qanun</h4>
       <p>🔹 <strong>Strings and levers:</strong> each string has levers (small switches) that raise or lower the pitch by a quarter tone each: 4 levers per string, and 3 for Mi and Si. In the natural position two levers are raised on the four-lever strings, and all the levers of Mi and Si are raised.</p>
       <p>🔹 <strong>Lever look:</strong> a <strong>raised</strong> lever is green with a white up arrow; a <strong>lowered</strong> lever is red with a white right arrow (toward the strings). This shows how to set your levers for each note of the maqam.</p>
-      <p>🔹 <strong>Notes:</strong> each note sits on the string of its letter name; if it exceeds that string's lever range it moves to the neighbouring string (for example "Do sharp-and-a-half" is played on Re). Press any lit string to hear its note.</p>
-      <p>🔹 <strong>Unavailable tonics:</strong> a few tonics (Mi half-sharp, La half-sharp, Re half-sharp, Sol half-sharp, Do sharp) do not fit the qanun strings, so they are hidden from the tonic list on the qanun. If your current choice is one of them when you switch to the qanun, the app shows Rast on Do, and restores your original choice when you return to the oud or organ.</p>
+      <p>🔹 <strong>Qanun layout:</strong> the levers sit in their own zone beside the slanted edge (the tuning-pin side), and next to them are the <strong>blue rectangles</strong> showing the notes, so you can compare each note with its levers on the same string. The string names are beside the right edge of the playing area, before the windowed frame.</p>
+      <p>🔹 <strong>Notes:</strong> each note sits on the string of its letter name; if it exceeds that string's lever range it moves to the neighbouring string (for example "Do sharp-and-a-half" is played on Re). Press any blue rectangle to hear its note.</p>
+      <p>🔹 <strong>Tonics unavailable in some maqamat:</strong> some tonics do not suit a particular maqam on the qanun (a note finds no suitable string, or one string would need two different lever positions in the same maqam), so they are hidden from the tonic list on the qanun <strong>for that maqam only</strong>; the tonic stays available in maqamat where there is no problem. If your current choice is one of them when you switch to the qanun or change the maqam, the app shows Rast on Do, and restores your original choice when you return to the oud or organ. The oud and organ always show every tonic.</p>
     </div>
 
     <div class="help-section" id="help-sec-en-2">
@@ -11618,8 +11630,9 @@ document.getElementById('shared-playBtn').onclick = async function() {
 
       <p>🔹 <strong>Strings and levers:</strong> each string has levers (small switches) that raise or lower the pitch by a quarter tone each: 4 levers per string, and 3 for Mi and Si. In the natural position two levers are raised on the four-lever strings, and all the levers of Mi and Si are raised.</p>
       <p>🔹 <strong>Lever look:</strong> a <strong>raised</strong> lever is green with a white up arrow; a <strong>lowered</strong> lever is red with a white right arrow (toward the strings). This shows how to set your levers for each note of the maqam.</p>
-      <p>🔹 <strong>Notes:</strong> each note sits on the string of its letter name; if it exceeds that string's lever range it moves to the neighbouring string (for example "Do sharp-and-a-half" is played on Re). Press any lit string to hear its note.</p>
-      <p>🔹 <strong>Unavailable tonics:</strong> a few tonics (Mi half-sharp, La half-sharp, Re half-sharp, Sol half-sharp, Do sharp) do not fit the qanun strings, so they are hidden from the tonic list on the qanun. If your current choice is one of them when you switch to the qanun, the app shows Rast on Do, and restores your original choice when you return to the oud or organ.</p>
+      <p>🔹 <strong>Qanun layout:</strong> the levers sit in their own zone beside the slanted edge (the tuning-pin side), and next to them are the <strong>blue rectangles</strong> showing the notes, so you can compare each note with its levers on the same string. The string names are beside the right edge of the playing area, before the windowed frame.</p>
+      <p>🔹 <strong>Notes:</strong> each note sits on the string of its letter name; if it exceeds that string's lever range it moves to the neighbouring string (for example "Do sharp-and-a-half" is played on Re). Press any blue rectangle to hear its note.</p>
+      <p>🔹 <strong>Tonics unavailable in some maqamat:</strong> some tonics do not suit a particular maqam on the qanun (a note finds no suitable string, or one string would need two different lever positions in the same maqam), so they are hidden from the tonic list on the qanun <strong>for that maqam only</strong>; the tonic stays available in maqamat where there is no problem. If your current choice is one of them when you switch to the qanun or change the maqam, the app shows Rast on Do, and restores your original choice when you return to the oud or organ. The oud and organ always show every tonic.</p>
     </div>
 
 
@@ -11856,7 +11869,7 @@ function doRender() {
     mk('rect', { x: px, y: py, width: cw * 12 + 12, height: ph, rx: 6, fill: '#1b1d20', stroke: '#4a4e53', 'stroke-width': 1 }, pl);
     const b0 = px + 8, LC = '#c9cdd0', yTop = py + 23, yU = py + 73, yBus = py + 90;
     const bd = k => b0 + k * cw;
-    const t = mk('text', { x: px + 222, y: py + 10, 'font-size': 8.5, fill: '#9aa0a6', 'font-family': 'Arial,sans-serif', 'font-weight': 700, 'letter-spacing': 1.2, direction: 'ltr', 'text-anchor': 'middle' }, pl);
+    const t = mk('text', { x: px + 222, y: py + 10, 'font-size': 10, fill: '#f1f3f4', 'font-family': 'Arial,sans-serif', 'font-weight': 800, 'letter-spacing': 1.4, direction: 'ltr', 'text-anchor': 'middle' }, pl);
     t.textContent = 'SCALE SETTING';
     const ln = (d) => mk('path', { d, fill: 'none', stroke: LC, 'stroke-width': 1.4, 'stroke-linecap': 'round' }, pl);
     ln(`M${bd(0)},${py + 14} H${bd(12)}`);
@@ -11977,7 +11990,9 @@ function doRender() {
 const qLayer = mk('g', { id: 'qanunLayer' });
 const qDefs = mk('defs', {}, qLayer);
 { const lg = (id, x2, y2, stops) => { const g = mk('linearGradient', { id, x1: 0, y1: 0, x2, y2 }, qDefs); stops.forEach(s => mk('stop', { offset: s[0], 'stop-color': s[1] }, g)); };
-  lg('qWood', 1, 1, [['0', '#7a5230'], ['.5', '#6a4527'], ['1', '#7a5230']]);
+  lg('qWood', 1, 1, [['0', '#7a4c2c'], ['.5', '#62391f'], ['1', '#4c2b16']]);
+  lg('qFr', 1, 0, [['0', '#8a5a34'], ['1', '#5e3a20']]);
+  lg('qMp', 1, 0, [['0', '#b98a52'], ['1', '#9a6c3a']]);
   lg('qSkin', 1, 0, [['0', '#4a3022'], ['1', '#35200f']]);
   lg('qCard', 0, 1, [['0', '#fbf0d6'], ['1', '#e6cf9f']]);
   lg('qBlue', 0, 1, [['0', '#5b97ea'], ['1', '#2b6fc9']]);
@@ -12040,25 +12055,46 @@ function renderQanun() {
   }
   const infoOf = k => chord ? (cs.get(k) || strs.get(k) || { L: ((k % 7) + 7) % 7, dev: 0, nt: null }) : strs.get(k);
   const n = keys.length;
-  // الأبعاد: وحدة u نسبةً إلى ارتفاع اللوحة
-  const u = CH / 150, HQ = CH + 24;
-  const SW = 3.5 * u, Wb = CW - SW, bx = SW / 2;
+  // الأبعاد: وحدة u نسبةً إلى ارتفاع اللوحة، و k مقياس تصميم القانون الجديد
+  const u = CH / 150, HQ = CH + 24, k = HQ / 339;
+  const Wb = CW - 6 * k, bx = 3 * k;
   const root = mk('g', { transform: `translate(${X0 + bx},${Y0})` }, qBody);
-  const top = 0, bot = HQ, RT = Wb * 0.46, RB = Wb;
-  const CUT = 16 * u, rxAt = y => Math.min(RB, RT + (RB - RT) * (y - top) / (bot - CUT - top));
-  // حافة الجلد المائلة (الأوتار تنتهي عندها لا فوق إطار الخشب الفاتح)
-  const skinX = y => { const x1 = RT - 6 * u * 1.3, y1 = top + 6 * u, x2 = RB - 6 * u * 2.2, y2 = bot - CUT; return Math.min(x2, x1 + (x2 - x1) * (y - y1) / (y2 - y1)); };
+  const top = 0, bot = HQ;
+  const BW = 9 * k;                                   // عرض الإطار الخشبي
+  const FWd = 110 * k;                                 // عرض الإطار الأيمن (النوافذ)
+  const xt = Wb * 0.62, slope = xt / (bot - top);     // الضلع المائل: من أسفل اليسار إلى أعلى (قبل الإطار الأيمن)
+  const xs = y => (bot - y) * slope;
+  const ws = (BW / 2) * Math.sqrt(1 + slope * slope); // إزاحة الحافة الداخلية للإطار أفقياً
+  const rightEdge = Wb - FWd;                         // آخر منطقة العزف (حافة الإطار الأيمن)
   const padY = 22, step = n > 1 ? Math.min((HQ - 2 * padY) / (n - 1), 40 * u) : 0;
   const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
   const yOf = j => yBot - j * step;
-  const NW = 40 * u, lz = 8 * u + NW, LW = 15 * u, LG = 5 * u, LH = Math.min(15 * u, step * .85), div = lz + 5 * LW + 4 * LG + 8 * u;
-  mk('polygon', { points: `0,${top} ${RT},${top} ${RB},${bot - CUT} ${RB},${bot} 0,${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: '#4a2f17', 'stroke-width': 3.5 * u, 'stroke-linejoin': 'round' }, root);
-  const i6 = 6 * u;
-  mk('polygon', { points: `${i6},${top + i6} ${div},${top + i6} ${div},${bot - i6} ${i6},${bot - i6}`, class: 'qlz', fill: '#4a2f1c' }, root);
-  mk('polygon', { points: `${div + 3 * u},${top + i6} ${RT - i6 * 1.3},${top + i6} ${RB - i6 * 2.2},${bot - CUT} ${RB - i6 * 2.2},${bot - i6} ${div + 3 * u},${bot - i6}`, class: 'qskin', fill: 'url(#qSkin)', stroke: '#3c2412', 'stroke-width': u }, root);
-  const div2 = lz - 4 * u;
-  [div2, div].forEach((x, i) => mk('line', { x1: x, y1: top, x2: x, y2: bot, stroke: '#8a6a38', 'stroke-width': (i ? 3.5 : 2.5) * u }, root));
-  const pillW = 68 * u, pillX = div + 8 * u, pillH = Math.min(20 * u, step * .85);
+  const LW = 20 * k, LG = 3.5 * k, LH = Math.min(30 * k, step * .8), mg = 9 * k;
+  const ZW = ws + mg + slope * LH + 4 * (LW + LG) + mg;   // عرض منطقة العرب (أفقياً)
+  const pillW = 96 * k, pillH = Math.min(32 * k, step * .8), cardW = 54 * k, cardX0 = rightEdge - 3 * k - cardW / 2;   // موضع البطاقة: داخل القانون على يسار الإطار الأيمن
+  // جسم القانون (مثلث قائم مقطوع) + منطقة العرب + الخط الفاصل
+  mk('polygon', { points: `0,${bot} ${xt},${top} ${Wb},${top} ${Wb},${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: 'none' }, root);
+  mk('polygon', { points: `0,${bot} ${xt},${top} ${xt + ZW},${top} ${ZW},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);
+  mk('line', { x1: ZW, y1: bot, x2: xt + ZW, y2: top, stroke: '#e6c785', 'stroke-width': 2.5 * k, class: 'qdiv' }, root);
+  // الأوتار (٣ لكل نغمة): من الحافة المائلة (تحت العرب) إلى آخر القانون
+  for (let j = 0; j < n; j++) {
+    const y = yOf(j);
+    for (const d of [-3.5, 0, 3.5]) mk('line', { x1: xs(y + d * k) + ws, y1: y + d * k, x2: rightEdge, y2: y + d * k, stroke: '#eceff1', 'stroke-width': 1.5 * k, opacity: .92 }, root);
+  }
+  // الإطار الأيمن (٥ نوافذ والخط العمودي يمر بمنتصف دوائرها)
+  const FY = -BW / 2, FH = bot - top + BW;
+  mk('rect', { x: rightEdge, y: FY, width: FWd, height: FH, fill: 'url(#qFr)', stroke: '#24120a', 'stroke-width': 1.5 * k, class: 'qfr' }, root);
+  const wp = FH / 5;
+  for (let i = 0; i < 5; i++) {
+    const wy = FY + i * wp + 7 * k;
+    mk('rect', { x: rightEdge + 8 * k, y: wy, width: FWd - 16 * k, height: wp - 8 * k, fill: '#a97d4c', stroke: '#24120a', 'stroke-width': k, class: 'qwin' }, root);
+    mk('rect', { x: rightEdge + 13 * k, y: wy + 5 * k, width: FWd - 26 * k, height: wp - 18 * k, fill: '#c9a46c', opacity: .85, class: 'qwin2' }, root);
+  }
+  mk('rect', { x: rightEdge + FWd / 2 - 4 * k, y: FY, width: 8 * k, height: FH, fill: 'url(#qMp)', stroke: '#6a4a22', 'stroke-width': k, class: 'qstrip' }, root);
+  for (let i = 0; i < 5; i++) mk('circle', { cx: rightEdge + FWd / 2, cy: FY + i * wp + 7 * k + (wp - 8 * k) / 2, r: 7 * k, fill: '#c89a5e', stroke: '#6a4a22', 'stroke-width': k, class: 'qcirc' }, root);
+  // الإطار الخشبي المغلق حول القانون
+  const P = `M0,${bot} L${xt},${top} L${Wb - BW / 2},${top} L${Wb - BW / 2},${bot} Z`;
+  [['#24120a', 11], ['#a8773f', 9], ['#c79a62', 2]].forEach((c, i) => mk('path', { d: P, fill: 'none', stroke: c[0], 'stroke-width': c[1] * k, 'stroke-linejoin': 'miter', opacity: i === 2 ? .7 : 1, class: 'qb' + i, 'pointer-events': 'none' }, root));
   const baseNm = L => baseName(Q_PC[L]);
   const lbl = (parent, nt, cx, cy, maxW, maxH, lay) => {
     const els = Array.from((lay || src).querySelectorAll('[data-scale-idx="' + nt.idx + '"]')).filter(e => e.tagName !== 'rect');
@@ -12073,41 +12109,34 @@ function renderQanun() {
   };
   const fillFor = nt => nt.fill === '#ffe100' ? 'url(#qYel)' : (nt.fill === '#1B7A3D' ? 'url(#qGrn)' : (nt.cur ? 'url(#qRed)' : 'url(#qBlue)'));
   const strokeFor = nt => nt.fill === '#ffe100' ? '#6b5300' : (nt.fill === '#1B7A3D' ? '#04230f' : (nt.cur ? '#5e1414' : '#06214a'));
-  // الأوتار (٣ لكل نغمة) من أول القانون إلى مفاتيح الشد
-  for (let j = 0; j < n; j++) {
-    const key = keys[j], L = ((key % 7) + 7) % 7, y = yOf(j), xe = skinX(y) - 1.5 * u, gold = false;
-    for (const d of [-3.5, 0, 3.5]) {
-      if (gold) mk('line', { x1: 6 * u, y1: y + d * u, x2: xe, y2: y + d * u, stroke: '#2a1306', 'stroke-width': 4.2 * u, opacity: .9 }, root);
-      mk('line', { x1: 6 * u, y1: y + d * u, x2: xe, y2: y + d * u, stroke: gold ? '#fbe08c' : '#f6f8fa', 'stroke-width': (gold ? 1.6 : 1.5) * u }, root);
-    }
-    mk('circle', { cx: xe + 1 * u, cy: y, r: 3.2 * u, fill: '#c9c9c9', stroke: '#444', 'stroke-width': .8 * u }, root);
-  }
   for (let j = 0; j < n; j++) {
     const key = keys[j], info = infoOf(key), L = info.L, y = yOf(j), cnt = chord ? (cs.get(key) && cs.get(key).nt) : info.nt;
-    // بطاقة اسم الوتر (بدون علامات تحويل)
-    const cw = 28 * u, ch = Math.min(16 * u, step * .8), cxm = 8 * u + NW / 2 - 2 * u;
-    mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * u, class: 'qcard', fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': u, filter: 'url(#qShadow)' }, root);
-    const t = mk('text', { x: cxm, y: y + 4.2 * u, 'text-anchor': 'middle', 'font-size': 12 * u, 'font-weight': 800, class: 'qcardtxt', fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
-    t.textContent = baseNm(L);
-    // العرب
+    // العرب (بجانب الحافة المائلة داخل منطقتها الخاصة)
     const nl = QLV[L], nat = QNAT[L];
     const up = info ? Math.max(0, Math.min(nl, nat + info.dev)) : nat;
+    const lx0 = xs(y) + ws + mg + slope * LH / 2;
     for (let q = 0; q < nl; q++) {
-      const on = q < up, x = lz + q * (LW + LG);
-      const r = mk('rect', { x, y: y - LH / 2, width: LW, height: LH, rx: 2.5 * u, fill: on ? '#2fb457' : '#ff3b30', stroke: on ? '#17692f' : '#9e1209', 'stroke-width': u }, root);
+      const on = q < up, x = lx0 + q * (LW + LG);
+      const r = mk('rect', { x, y: y - LH / 2, width: LW, height: LH, rx: 2.5 * k, fill: on ? '#2fb457' : '#ff3b30', stroke: on ? '#17692f' : '#9e1209', 'stroke-width': k }, root);
       if (!on) r.setAttribute('filter', 'url(#qGlow)');
       // سهم: للأعلى = مرفوعة، لليمين (اتجاه الوتر) = نازلة
       const ax = x + LW / 2, ay = y, h = Math.min(LW, LH) * .3;
       const d = on ? `M${ax} ${ay + h} V${ay - h} M${ax - h * .75} ${ay - h * .1} L${ax} ${ay - h} L${ax + h * .75} ${ay - h * .1}`
                    : `M${ax - h} ${ay} H${ax + h} M${ax + h * .1} ${ay - h * .75} L${ax + h} ${ay} L${ax + h * .1} ${ay + h * .75}`;
-      mk('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 1.9 * u, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pointer-events': 'none' }, root);
+      mk('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 2.2 * k, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pointer-events': 'none' }, root);
     }
+    // بطاقة اسم الوتر (بدون علامات تحويل) على يسار المستطيل
+    const pillX = Math.min(xs(yOf(n - 1) - pillH / 2) + ZW + 22 * k, rightEdge - cardW - 30 * k - pillW);   // كل المستطيلات الزرقاء في عمود واحد تحت أولها (بعد خط منطقة العرب في الوتر الأعلى)
+    const cw = cardW, ch = Math.min(30 * k, step * .78), cxm = cardX0 - cw / 2;
+    mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * k, class: 'qcard', fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': k, filter: 'url(#qShadow)' }, root);
+    const t = mk('text', { x: cxm, y: y + 7.2 * k, 'text-anchor': 'middle', 'font-size': 21 * k, 'font-weight': 800, class: 'qcardtxt', fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
+    t.textContent = baseNm(L);
     // مستطيل النغمة
     const g = mk('g', { class: 'qpill' }, root);
     if (cnt) {
       const nt = cnt;
-      mk('rect', { x: pillX, y: y - pillH / 2, width: pillW, height: pillH, rx: 5 * u, fill: fillFor(nt), stroke: strokeFor(nt), 'stroke-width': 1.5 * u }, g);
-      lbl(g, nt, pillX + pillW / 2, y, pillW - 10 * u, pillH - 3 * u, chord ? clay : src);
+      mk('rect', { x: pillX, y: y - pillH / 2, width: pillW, height: pillH, rx: 5 * k, fill: fillFor(nt), stroke: strokeFor(nt), 'stroke-width': 1.5 * k }, g);
+      lbl(g, nt, pillX + pillW / 2, y, pillW - 10 * k, pillH - 3 * k, chord ? clay : src);
       const down = () => g.classList.add('pressed'), upf = () => setTimeout(() => g.classList.remove('pressed'), 120);
       g.addEventListener('pointerdown', down);
       ['pointerup', 'pointerleave', 'pointercancel'].forEach(e => g.addEventListener(e, upf));
@@ -12329,25 +12358,25 @@ setTimeout(() => { placeToggle(); render(); }, 600);
 window.addEventListener('load', () => { placeToggle(); render(); });
 
 // ===== تصفية قائمة الحروف بالأورغ: نخفي أي حرف تتجاوز نغمات المقام معه آخر مفتاح (فا ٦) =====
-// حروف تضيع فيها نغمة على القانون (عدد العرب الفعلي لكل وتر): تُخفى من القائمة عند القانون — نتيجة فحص شامل لكل المقامات والدرجات
-const QANUN_BAD = {"الراست": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "السوزناك": ["miHafDiaz", "miHafDiazJawab"], "السوزدلار": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "النيرز راست": ["miHafDiaz", "miHafDiazJawab"], "راست البشاير": ["miHafDiaz", "miHafDiazJawab"], "الماهور": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الدلنشين": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "الزنجران": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "النهاوند ذو الحساس": ["miHafDiaz", "miHafDiazJawab"], "النهاوند الكردي": ["miHafDiaz", "miHafDiazJawab"], "العشاق المصري": ["miHafDiaz", "miHafDiazJawab"], "الطرز الجديد": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الطرز الجديد شكل آخر": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "النهاوند المرصع": ["miHafDiaz", "miHafDiazJawab"], "النهاوند الكبير": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "الفرح فزا": ["miHafDiaz", "miHafDiazJawab"], "السلطاني يكاه": ["miHafDiaz", "miHafDiazJawab"], "السيكاه": ["doDiaz", "doDiazJawab"], "السيكاه مايا": ["doDiaz", "doDiazJawab"], "صبا البوسليك": ["miHafDiaz", "miHafDiazJawab"], "النوا أثر": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "النكريز": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "البسنديده": ["laHafDiaz", "miHafDiaz", "laHafDiazJawab", "miHafDiazJawab"], "العجم عشيران": ["solHalfDiaz", "laHafDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الشوق أفزا": ["laHafDiaz", "reHafDiaz", "miHafDiaz", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "الجهاركاه": ["laHafDiaz", "reHafDiaz", "miHafDiaz", "laHafDiazJawab", "reHafDiazJawab", "miHafDiazJawab"], "العجم المرصع": ["solHalfDiaz", "laHafDiaz", "doDiaz", "reHafDiaz", "miHafDiaz", "solHalfDiazJawab", "laHafDiazJawab", "doDiazJawab", "reHafDiazJawab", "miHafDiazJawab"]};
+// جدول (مقام ← حروف فيها مشكلة على القانون: نغمة تضيع أو وتر يحتاج وضعي عرب مختلفين): تُخفى من قائمة الحروف عند القانون فقط، لكل مقام على حدة — نتيجة فحص شامل لكل المقامات والدرجات (نغمات المقامات ثابتة؛ يُعاد توليده عند إضافة مقام)
+const QANUN_BAD = {"الراست":["solHalfDiaz","laHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"السوزناك":["solHalfDiaz","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"السوزدلار":["solHalfDiaz","laHafDiaz","doDiaz","reHafDiaz","miHafDiaz","solHalfDiazJawab","laHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"النيرز راست":["laHafDiaz","doDiaz","reHafDiaz","miHafDiaz","laHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"راست البشاير":["laHafDiaz","doHafBimol","doDiaz","reHafDiaz","miHafDiaz","laHafDiazJawab","doHafBimolJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الماهور":["solHalfDiaz","laHafDiaz","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الدلنشين":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","doDiaz","reHafDiaz","miHafDiaz","faDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","doDiazJawab","reHafDiazJawab"],"البياتي":["laHafDiaz","doHafBimol","miHafDiaz","laHafDiazJawab","doHafBimolJawab","miHafDiazJawab"],"الشورى":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","reHafBimol","reHafDiaz","miBimol","miHafDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","reHafBimolJawab","reHafDiazJawab","miBimolJawab","miHafDiazJawab"],"الحسيني":["laHafDiaz","miHafDiaz","laHafDiazJawab","miHafDiazJawab"],"البياتين":["doHafBimol","miHafDiaz","doHafBimolJawab","miHafDiazJawab"],"الكرد":["laBimol","laHafDiaz","doHafBimol","miHafDiaz","solHafBimol","laBimolJawab","laHafDiazJawab","doHafBimolJawab","miHafDiazJawab"],"اللامي":["laBimol","doHafBimol","reHafBimol","miBimol","miHafDiaz","solHafBimol","laBimolJawab","doHafBimolJawab","reHafBimolJawab","miBimolJawab","miHafDiazJawab"],"الشاهناز الكردي":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الحجاز كار كرد":["laBimol","laHafDiaz","doHafBimol","miHafDiaz","solHafBimol","laBimolJawab","laHafDiazJawab","doHafBimolJawab","miHafDiazJawab"],"الطرز نوين":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","reHafBimol","reHafDiaz","miBimol","miHafDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","reHafBimolJawab","reHafDiazJawab","miBimolJawab","miHafDiazJawab"],"الحجاز":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الشاهناز":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"حجاز الأويج":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الزنجران":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الحجازين":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafBimol","reHafDiaz","miBimol","miHafDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafBimolJawab","reHafDiazJawab","miBimolJawab","miHafDiazJawab"],"النهاوند ذو الحساس":["solHalfDiaz","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"النهاوند الكردي":["laHafDiaz","doHafBimol","reHafDiaz","miHafDiaz","laHafDiazJawab","doHafBimolJawab","reHafDiazJawab","miHafDiazJawab"],"العشاق المصري":["laHafDiaz","reHafDiaz","miHafDiaz","laHafDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الطرز الجديد":["solHalfDiaz","laHafDiaz","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الطرز الجديد شكل آخر":["solHalfDiaz","laHafBimol","la","laHafDiaz","siHafBimol","si","doHafDiaz","doDiaz","reHafDiaz","miHafBimol","mi","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafBimolJawab","laJawab","laHafDiazJawab","siHafBimolJawab","siJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafBimolJawab","miJawab","miHafDiazJawab"],"النهاوند المرصع":["solHalfDiaz","laBimol","laHafDiaz","doHafBimol","reHafBimol","reHafDiaz","miBimol","miHafDiaz","solHafBimol","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafBimolJawab","reHafBimolJawab","reHafDiazJawab","miBimolJawab","miHafDiazJawab"],"النهاوند الكبير":["solHalfDiaz","laHafDiaz","reHafDiaz","miHafDiaz","solHalfDiazJawab","laHafDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الفرح فزا":["laHafDiaz","doHafBimol","reHafDiaz","miHafDiaz","laHafDiazJawab","doHafBimolJawab","reHafDiazJawab","miHafDiazJawab"],"السلطاني يكاه":["solHalfDiaz","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"السيكاه":["laHafDiaz","si","doDiaz","miHafDiaz","faDiaz","laHafDiazJawab","siJawab","doDiazJawab","miHafDiazJawab"],"الهزام":["laBimol","la","laHafDiaz","si","doDiaz","miBimol","mi","miHafDiaz","faDiaz","laBimolJawab","laJawab","laHafDiazJawab","siJawab","doDiazJawab","miBimolJawab","miJawab","miHafDiazJawab"],"العراق":["doDiaz","miHafDiaz","faDiaz","doDiazJawab","miHafDiazJawab"],"البسته نكار":["laBimol","siBimol","doHafBimol","do","doDiaz","reHafBimol","miBimol","miHafDiaz","fa","faDiaz","solHafBimol","laBimolJawab","siBimolJawab","doHafBimolJawab","doJawab","doDiazJawab","reHafBimolJawab","miBimolJawab","miHafDiazJawab","faJawab"],"السيكاه مايا":["si","doDiaz","miHafDiaz","faDiaz","siJawab","doDiazJawab","miHafDiazJawab"],"السيكاه البلدي":["solHalfDiaz","laBimol","laHafDiaz","doHafDiaz","doDiaz","reHafDiaz","miBimol","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laBimolJawab","laHafDiazJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miBimolJawab","miHafDiazJawab"],"الصبا":["laBimol","laHafBimol","laHafDiaz","siBimol","doHafBimol","reHafBimol","miBimol","miHafBimol","miHafDiaz","fa","solHafBimol","laBimolJawab","laHafBimolJawab","laHafDiazJawab","siBimolJawab","doHafBimolJawab","reHafBimolJawab","miBimolJawab","miHafBimolJawab","miHafDiazJawab","faJawab"],"صبا البوسليك":["laBimol","laHafBimol","laHafDiaz","siBimol","doHafBimol","reHafBimol","reHafDiaz","miBimol","miHafBimol","miHafDiaz","fa","solHafBimol","laBimolJawab","laHafBimolJawab","laHafDiazJawab","siBimolJawab","doHafBimolJawab","reHafBimolJawab","reHafDiazJawab","miBimolJawab","miHafBimolJawab","miHafDiazJawab","faJawab"],"صبا الزمزمه":["laBimol","laHafBimol","laHafDiaz","siBimol","doHafBimol","reHafBimol","miBimol","miHafBimol","miHafDiaz","fa","solHafBimol","laBimolJawab","laHafBimolJawab","laHafDiazJawab","siBimolJawab","doHafBimolJawab","reHafBimolJawab","miBimolJawab","miHafBimolJawab","miHafDiazJawab","faJawab"],"النوا أثر":["solHalfDiaz","laHafDiaz","siHafBimol","si","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","siHafBimolJawab","siJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"النكريز":["solHalfDiaz","laHafDiaz","siHafBimol","si","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","siHafBimolJawab","siJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"البسنديده":["solHalfDiaz","laHafDiaz","siHafBimol","si","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","siHafBimolJawab","siJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"العجم عشيران":["solHalfDiaz","laHafDiaz","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الشوق أفزا":["solHalfDiaz","laHafDiaz","doHafBimol","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafBimolJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"الجهاركاه":["solHalfDiaz","laHafDiaz","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"],"العجم المرصع":["solHalfDiaz","laHafDiaz","si","doHafDiaz","doDiaz","reHafDiaz","miHafDiaz","faHafDiaz","faDiaz","solHalfDiazJawab","laHafDiazJawab","siJawab","doHafDiazJawab","doDiazJawab","reHafDiazJawab","miHafDiazJawab"]};
 const HARF_DROP = ['doDiaz','doDiazJawab','reHafDiaz','reHafDiazJawab','miHafDiaz','miHafDiazJawab','solHalfDiaz','solHalfDiazJawab','laHafDiaz','laHafDiazJawab'];
 function filterRoots() {
   if (!organMode || !window._maqamIntervals || !window._harfList) return;
   const ms = document.getElementById('maqam-select'), hs = document.getElementById('harf-select');
   if (!ms || !hs) return;
   const iv = window._maqamIntervals[ms.value]; if (!iv) return;
-  const sum = iv.reduce((a, b) => a + b, 0);
+  const sum = iv.reduce((a, b) => a + b, 0), mtxt = ms.selectedOptions[0] ? ms.selectedOptions[0].textContent.trim() : '';
   Array.from(hs.options).forEach(o => {
     const i = window._harfList.indexOf(o.value);
     if (i < 0) return;
     let hide = (55 + Math.ceil((i + sum) / 2) > MIDI_HI);
-    if (!hide && qanunMode && HARF_DROP.indexOf(o.value) >= 0) hide = true;   // حروف محذوفة من قائمة القانون فقط (لا تتسع لها أوتاره)
+    if (!hide && qanunMode) { const bad = QANUN_BAD[mtxt]; if (bad ? bad.indexOf(o.value) >= 0 : HARF_DROP.indexOf(o.value) >= 0) hide = true; }   // حروف فيها مشكلة في هذا المقام على القانون (وللمقامات خارج الجدول: القائمة العامة القديمة)
     o.style.display = hide ? 'none' : '';
   });
   if (qanunMode && hs.options[hs.selectedIndex] && hs.options[hs.selectedIndex].style.display === 'none') {
-    // الحرف المختار غير متاح على القانون: نعود للوضع الافتراضي (الراست، الدو)
-    try { if (!localStorage.getItem('qanunSavedSel')) { const cr = document.querySelector('input[name="maqam"]:checked'); localStorage.setItem('qanunSavedSel', JSON.stringify({ r: cr ? cr.id : 'r1b', m: ms.selectedOptions[0].textContent.trim(), h: hs.value })); } } catch (e) {}
+    // الحرف المختار فيه مشكلة في هذا المقام على القانون: نعود للوضع الافتراضي (الراست، الدو) ونحفظ اختياره الأصلي ليرجع عند العود/الأورغ
+    try { if (!localStorage.getItem('qanunSavedSel')) { const cr = document.querySelector('input[name="maqam"]:checked'); localStorage.setItem('qanunSavedSel', JSON.stringify({ r: cr ? cr.id : 'r1b', m: mtxt, h: hs.value })); } } catch (e) {}
     window._qReset = true; setTimeout(() => { window._qReset = false; }, 1500);
     const r1 = document.getElementById('r1b'); if (r1 && !r1.checked) { r1.checked = true; r1.dispatchEvent(new Event('change', { bubbles: true })); }
     setTimeout(() => {
