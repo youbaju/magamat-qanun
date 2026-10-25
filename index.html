@@ -12062,7 +12062,7 @@ function renderQanun() {
   const top = 0, bot = HQ;
   const BW = 9 * k;                                   // عرض الإطار الخشبي
   const FWd = 110 * k;                                 // عرض الإطار الأيمن (النوافذ)
-  const xt = Wb * 0.62, slope = xt / (bot - top);     // الضلع المائل: من أسفل اليسار إلى أعلى (قبل الإطار الأيمن)
+  const xt = Wb * 0.56, slope = xt / (bot - top);     // الضلع المائل: من أسفل اليسار إلى أعلى (قبل الإطار الأيمن)
   const xs = y => (bot - y) * slope;
   const ws = (BW / 2) * Math.sqrt(1 + slope * slope); // إزاحة الحافة الداخلية للإطار أفقياً
   const rightEdge = Wb - FWd;                         // آخر منطقة العزف (حافة الإطار الأيمن)
@@ -12070,8 +12070,9 @@ function renderQanun() {
   const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
   const yOf = j => yBot - j * step;
   const LW = 20 * k, LG = 3.5 * k, LH = Math.min(30 * k, step * .8), mg = 9 * k;
-  const ZW = ws + mg + slope * LH + 4 * (LW + LG) + mg;   // عرض منطقة العرب (أفقياً)
-  const pillW = 96 * k, pillH = Math.min(32 * k, step * .8), cardW = 54 * k, cardX0 = rightEdge - 3 * k - cardW / 2;   // موضع البطاقة: داخل القانون على يسار الإطار الأيمن
+  const cardW = 48 * k, cardH = Math.min(30 * k, step * .78), cgap = 9 * k;
+  const ZW = ws + mg + slope * Math.max(LH, cardH) + cardW + cgap + 4 * (LW + LG) + mg;   // عرض منطقة العرب (أفقياً): اسم الوتر ثم العرب
+  const pillW = 96 * k, pillH = Math.min(32 * k, step * .8);
   // جسم القانون (مثلث قائم مقطوع) + منطقة العرب + الخط الفاصل
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Wb},${top} ${Wb},${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: 'none' }, root);
   mk('polygon', { points: `0,${bot} ${xt},${top} ${xt + ZW},${top} ${ZW},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);
@@ -12114,7 +12115,7 @@ function renderQanun() {
     // العرب (بجانب الحافة المائلة داخل منطقتها الخاصة)
     const nl = QLV[L], nat = QNAT[L];
     const up = info ? Math.max(0, Math.min(nl, nat + info.dev)) : nat;
-    const lx0 = xs(y) + ws + mg + slope * LH / 2;
+    const cx0 = xs(y) + ws + mg + slope * Math.max(LH, cardH) / 2, lx0 = cx0 + cardW + cgap;
     for (let q = 0; q < nl; q++) {
       const on = q < up, x = lx0 + q * (LW + LG);
       const r = mk('rect', { x, y: y - LH / 2, width: LW, height: LH, rx: 2.5 * k, fill: on ? '#2fb457' : '#ff3b30', stroke: on ? '#17692f' : '#9e1209', 'stroke-width': k }, root);
@@ -12125,11 +12126,11 @@ function renderQanun() {
                    : `M${ax - h} ${ay} H${ax + h} M${ax + h * .1} ${ay - h * .75} L${ax + h} ${ay} L${ax + h * .1} ${ay + h * .75}`;
       mk('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 2.2 * k, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pointer-events': 'none' }, root);
     }
-    // بطاقة اسم الوتر (بدون علامات تحويل) على يسار المستطيل
-    const pillX = Math.min(xs(yOf(n - 1) - pillH / 2) + ZW + 22 * k, rightEdge - cardW - 30 * k - pillW);   // كل المستطيلات الزرقاء في عمود واحد تحت أولها (بعد خط منطقة العرب في الوتر الأعلى)
-    const cw = cardW, ch = Math.min(30 * k, step * .78), cxm = cardX0 - cw / 2;
+    // بطاقة اسم الوتر (بدون علامات تحويل) قبل العرب داخل منطقة العرب
+    const pillX = Math.min(xs(yOf(n - 1) - pillH / 2) + ZW + 22 * k, rightEdge - 20 * k - pillW);   // كل المستطيلات الزرقاء في عمود واحد تحت أولها (بعد خط منطقة العرب في الوتر الأعلى)
+    const cw = cardW, ch = cardH, cxm = cx0 + cw / 2;
     mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * k, class: 'qcard', fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': k, filter: 'url(#qShadow)' }, root);
-    const t = mk('text', { x: cxm, y: y + 7.2 * k, 'text-anchor': 'middle', 'font-size': 21 * k, 'font-weight': 800, class: 'qcardtxt', fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
+    const t = mk('text', { x: cxm, y: y + 6.6 * k, 'text-anchor': 'middle', 'font-size': 19 * k, 'font-weight': 800, class: 'qcardtxt', fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
     t.textContent = baseNm(L);
     // مستطيل النغمة
     const g = mk('g', { class: 'qpill' }, root);
