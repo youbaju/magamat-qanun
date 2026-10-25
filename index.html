@@ -12062,21 +12062,21 @@ function renderQanun() {
   const top = 0, bot = HQ;
   const BW = 9 * k;                                   // عرض الإطار الخشبي
   const FWd = 110 * k;                                 // عرض الإطار الأيمن (النوافذ)
-  const xt = Wb * 0.56, slope = xt / (bot - top);     // الضلع المائل: من أسفل اليسار إلى أعلى (قبل الإطار الأيمن)
+  const xt = Wb * 0.5, slope = xt / (bot - top);     // الضلع المائل: من أسفل اليسار إلى أعلى (قبل الإطار الأيمن)
   const xs = y => (bot - y) * slope;
   const ws = (BW / 2) * Math.sqrt(1 + slope * slope); // إزاحة الحافة الداخلية للإطار أفقياً
   const rightEdge = Wb - FWd;                         // آخر منطقة العزف (حافة الإطار الأيمن)
   const padY = 22, step = n > 1 ? Math.min((HQ - 2 * padY) / (n - 1), 40 * u) : 0;
   const ySpan = step * (n - 1), yBot = HQ / 2 + ySpan / 2;
   const yOf = j => yBot - j * step;
-  const LW = 30 * k, LG = 6 * k, LH = Math.min(40 * k, step * .85), mg = 18 * k;
-  const cardW = 68 * k, cardH = Math.min(38 * k, step * .85), cgap = 40 * k;
+  const LW = 56 * k, LG = 8 * k, LH = Math.min(44 * k, step * .88), mg = 18 * k;
+  const cardW = 68 * k, cardH = Math.min(38 * k, step * .85), cgap = 84 * k;
   const ZW = ws + mg + slope * Math.max(LH, cardH) + cardW + cgap + 4 * (LW + LG) + mg;   // عرض منطقة العرب (أفقياً): اسم الوتر ثم العرب
-  const pillW = 96 * k, pillH = Math.min(32 * k, step * .8);
+  const pillW = 96 * k, pillH = Math.min(32 * k, step * .8), pillX = rightEdge - 56 * k - pillW, Dx = pillX - 14 * k;   // المستطيلات الزرقاء قريبة من العرب؛ Dx حدّ منطقة العرب (تشمل كل المساحة قبلها)
   // جسم القانون (مثلث قائم مقطوع) + منطقة العرب + الخط الفاصل
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Wb},${top} ${Wb},${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: 'none' }, root);
-  mk('polygon', { points: `0,${bot} ${xt},${top} ${xt + ZW},${top} ${ZW},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);
-  mk('line', { x1: ZW, y1: bot, x2: xt + ZW, y2: top, stroke: '#e6c785', 'stroke-width': 2.5 * k, class: 'qdiv' }, root);
+  mk('polygon', { points: `0,${bot} ${xt},${top} ${Dx},${top} ${Dx - xt},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);
+  mk('line', { x1: Dx - xt, y1: bot, x2: Dx, y2: top, stroke: '#e6c785', 'stroke-width': 2.5 * k, class: 'qdiv' }, root);
   // الأوتار (٣ لكل نغمة): من الحافة المائلة (تحت العرب) إلى آخر القانون
   for (let j = 0; j < n; j++) {
     const y = yOf(j);
@@ -12115,7 +12115,7 @@ function renderQanun() {
     // العرب (بجانب الحافة المائلة داخل منطقتها الخاصة)
     const nl = QLV[L], nat = QNAT[L];
     const up = info ? Math.max(0, Math.min(nl, nat + info.dev)) : nat;
-    const cx0 = xs(y) + ws + mg + slope * Math.max(LH, cardH) / 2, lx0 = cx0 + cardW + cgap;
+    const cx0 = xs(y) + ws + mg + slope * Math.max(LH, cardH) / 2, lx0 = xs(y) + (Dx - xt) - mg - slope * LH / 2 - (4 * (LW + LG) - LG);   // العرب بمحاذاة الخط الفاصل (جهة اليمين)
     for (let q = 0; q < nl; q++) {
       const on = q < up, x = lx0 + q * (LW + LG);
       const r = mk('rect', { x, y: y - LH / 2, width: LW, height: LH, rx: 2.5 * k, fill: on ? '#2fb457' : '#ff3b30', stroke: on ? '#17692f' : '#9e1209', 'stroke-width': k }, root);
@@ -12127,8 +12127,6 @@ function renderQanun() {
       mk('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 3 * k, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pointer-events': 'none' }, root);
     }
     // بطاقة اسم الوتر (بدون علامات تحويل) قبل العرب داخل منطقة العرب
-    const topLeverEnd = xs(yOf(n - 1)) + ws + mg + slope * Math.max(LH, cardH) / 2 + cardW + cgap + 4 * (LW + LG) - LG;   // نهاية عرب الوتر الأعلى
-    const pillX = Math.max((topLeverEnd + rightEdge) / 2 - pillW / 2, xs(yOf(n - 1) - pillH / 2) + ZW + 22 * k);   // المستطيلات الزرقاء في منتصف المسافة بين العرب والإطار الأيمن
     const cw = cardW, ch = cardH, cxm = cx0 + cw / 2;
     mk('rect', { x: cxm - cw / 2, y: y - ch / 2, width: cw, height: ch, rx: 3.5 * k, class: 'qcard', fill: 'url(#qCard)', stroke: '#8a6a38', 'stroke-width': k, filter: 'url(#qShadow)' }, root);
     const t = mk('text', { x: cxm, y: y + 8.6 * k, 'text-anchor': 'middle', 'font-size': 25 * k, 'font-weight': 800, class: 'qcardtxt', fill: '#4a2f1c', 'font-family': "'Cairo',Arial,sans-serif", 'pointer-events': 'none' }, root);
