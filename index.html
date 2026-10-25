@@ -2681,7 +2681,7 @@ html, body{background:#171717}
 #qanunLayer .qwin{fill:#a97d4c;stroke:#1a0d05;filter:brightness(.8)}
 #qanunLayer .qwin2{fill:#6e5130;opacity:.8}
 #qanunLayer .qstrip{fill:#7a5a35;stroke:#4a3320}
-#qanunLayer .qcirc{fill:#9a7444;stroke:#4a3320}
+#qanunLayer .qcirc{fill:#7a5a35;stroke:#4a3320}
 #qanunLayer .qb0{stroke:#0e0803}
 #qanunLayer .qb1{stroke:#a8773f;filter:brightness(.85)}
 #qanunLayer .qb2{stroke:#c79a62;filter:brightness(.85)}
@@ -12118,8 +12118,8 @@ function renderQanun() {
     mk('rect', { x: rightEdge + 8 * k, y: wy, width: FWd - 16 * k, height: wp - 8 * k, fill: '#a97d4c', stroke: '#24120a', 'stroke-width': k, class: 'qwin' }, root);
     mk('rect', { x: rightEdge + 13 * k, y: wy + 5 * k, width: FWd - 26 * k, height: wp - 18 * k, fill: '#c9a46c', opacity: .85, class: 'qwin2' }, root);
   }
+  for (let i = 0; i < 5; i++) mk('circle', { cx: rightEdge + FWd / 2, cy: FY + i * wp + 7 * k + (wp - 8 * k) / 2, r: 15 * k, fill: 'url(#qMp)', stroke: '#6a4a22', 'stroke-width': k, class: 'qcirc' }, root);
   mk('rect', { x: rightEdge + FWd / 2 - 4 * k, y: FY, width: 8 * k, height: FH, fill: 'url(#qMp)', stroke: '#6a4a22', 'stroke-width': k, class: 'qstrip' }, root);
-  for (let i = 0; i < 5; i++) mk('circle', { cx: rightEdge + FWd / 2, cy: FY + i * wp + 7 * k + (wp - 8 * k) / 2, r: 7 * k, fill: '#c89a5e', stroke: '#6a4a22', 'stroke-width': k, class: 'qcirc' }, root);
   // الإطار الخشبي المغلق حول القانون
   const P = `M0,${bot} L${xt},${top} L${Wb - BW / 2},${top} L${Wb - BW / 2},${bot} Z`;
   [['#24120a', 11], ['#a8773f', 9], ['#c79a62', 2]].forEach((c, i) => mk('path', { d: P, fill: 'none', stroke: c[0], 'stroke-width': c[1] * k, 'stroke-linejoin': 'miter', opacity: i === 2 ? .7 : 1, class: 'qb' + i, 'pointer-events': 'none' }, root));
@@ -12143,7 +12143,8 @@ function renderQanun() {
     // العرب (بجانب الحافة المائلة داخل منطقتها الخاصة)
     const nl = QLV[L], nat = QNAT[L];
     const up = info ? Math.max(0, Math.min(nl, nat + info.dev)) : nat;
-    const cx0 = xs(y) + ws + mg + slope * Math.max(LH, cardH) / 2, lx0 = xs(y) + (Dx - xt) - mg - slope * LH / 2 - (4 * (LW + LG) - LG);   // العرب بمحاذاة الخط الفاصل (جهة اليمين)
+    const lx0 = xs(y) + (Dx - xt) - mg - slope * LH / 2 - (4 * (LW + LG) - LG);   // العرب بمحاذاة الخط الفاصل (جهة اليمين)
+    const gapLP = mg + slope * (LH + pillH) / 2 + 6 * k * Math.sqrt(1 + slope * slope) + 16 * k, cx0 = lx0 - gapLP - cardW;   // المسافة بين اسم الوتر والعرب = المسافة بين العرب والمستطيل الأزرق
     for (let q = 0; q < nl; q++) {
       const on = q < up, x = lx0 + q * (LW + LG);
       const r = mk('rect', { x, y: y - LH / 2, width: LW, height: LH, rx: 2.5 * k, fill: on ? '#2fb457' : '#ff3b30', stroke: on ? '#17692f' : '#9e1209', 'stroke-width': k }, root);
