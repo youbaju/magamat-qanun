@@ -2672,17 +2672,19 @@ window.wireCustomSelect = wireCustomSelect;
 .help-search-result-item:hover, .help-search-result-item:active{background:#382c15;color:#e2bb9f}
 .help-search-noresult{color:#b8ac94}
 html, body{background:#171717}
-#qanunLayer .qwood{fill:#3a281a;stroke:none}
-#qanunLayer .qlz{fill:#4a3320;opacity:1}
-#qanunLayer .qdiv{stroke:#a88b55}
-#qanunLayer .qfr{fill:#33220f;stroke:#0e0803}
-#qanunLayer .qwin{fill:#5a4026;stroke:#0e0803}
+#qanunLayer .qwood{fill:url(#qWood);stroke:none;filter:brightness(.82)}
+#qanunLayer .qlz{fill:#8f6238;opacity:.5;filter:brightness(.8)}
+#qanunLayer .qdv0{stroke:#120903}
+#qanunLayer .qdv1{stroke:#a8773f;filter:brightness(.85)}
+#qanunLayer .qdv2{stroke:#c79a62;filter:brightness(.85)}
+#qanunLayer .qfr{fill:url(#qFr);stroke:#1a0d05;filter:brightness(.82)}
+#qanunLayer .qwin{fill:#a97d4c;stroke:#1a0d05;filter:brightness(.8)}
 #qanunLayer .qwin2{fill:#6e5130;opacity:.8}
 #qanunLayer .qstrip{fill:#7a5a35;stroke:#4a3320}
 #qanunLayer .qcirc{fill:#9a7444;stroke:#4a3320}
 #qanunLayer .qb0{stroke:#0e0803}
-#qanunLayer .qb1{stroke:#6b4a29}
-#qanunLayer .qb2{stroke:#8a6238}
+#qanunLayer .qb1{stroke:#a8773f;filter:brightness(.85)}
+#qanunLayer .qb2{stroke:#c79a62;filter:brightness(.85)}
 #qanunLayer .qskin{fill:#2b1c12;stroke:#150b05}
 #qanunLayer .qcard{fill:#4d3d2a;stroke:#7a5c36}
 #qanunLayer .qcardtxt{fill:#f3e6c8}
@@ -12076,7 +12078,7 @@ function renderQanun() {
   // جسم القانون (مثلث قائم مقطوع) + منطقة العرب + الخط الفاصل
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Wb},${top} ${Wb},${bot}`, class: 'qwood', fill: 'url(#qWood)', stroke: 'none' }, root);
   mk('polygon', { points: `0,${bot} ${xt},${top} ${Dx},${top} ${Dx - xt},${bot}`, class: 'qlz', fill: '#8f6238', opacity: .55 }, root);
-  mk('line', { x1: Dx - xt, y1: bot, x2: Dx, y2: top, stroke: '#e6c785', 'stroke-width': 2.5 * k, class: 'qdiv' }, root);
+  [['#24120a', 12], ['#a8773f', 9], ['#c79a62', 2.5]].forEach((c, i) => mk('line', { x1: Dx - xt, y1: bot, x2: Dx, y2: top, stroke: c[0], 'stroke-width': c[1] * k, 'stroke-linecap': 'butt', class: 'qdv' + i }, root));   // الخط الفاصل: حد داكن + ذهبي ساطع + لمعة
   // اهتزاز وتر القانون عند العزف (موجة تتلاشى كالعود)
   const rowLines = [];
   window._qVib = window._qVib || {};
