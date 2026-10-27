@@ -5871,14 +5871,14 @@ function buildOudStatic(){
         t.setAttribute('font-weight', '800');
         t.setAttribute('fill', '#0a2f52');
         const isEnNs = (window.oudLanguage === 'en');
-        // الزر يعرض الاسمين معاً (C ⇄ Do / C ⇄ دو): النظام الحالي غامق والبديل باهت
+        // الزر يعرض الاسمين معاً (C ⇄ Do / C ⇄ دو): الغامق هو النظام الذي ستنتقل إليه عند الضغط (كبقية الأزرار)، والباهت هو الحالي
         t.setAttribute('direction', 'ltr'); t.setAttribute('font-size', String(34 * BTN_K));
         if (!isEnNs) t.setAttribute('font-family', "'Cairo', Arial, sans-serif");
         const nsSolfWord = isEnNs ? 'Do' : '\u062F\u0648';
         const nsLabel = () => {
           const isLetter = (window.oudNoteSystem === 'letter');
           while (t.firstChild) t.removeChild(t.firstChild);
-          [['C', isLetter], ['\u2003\u2002', true], [nsSolfWord, !isLetter]].forEach(([txt, on], i) => {
+          [['C', !isLetter], ['\u2003\u2002', true], [nsSolfWord, isLetter]].forEach(([txt, on], i) => {
             const ts = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
             ts.textContent = txt;
             if (i !== 1) ts.setAttribute('fill-opacity', on ? '1' : '0.4');
@@ -11111,7 +11111,7 @@ document.getElementById('shared-playBtn').onclick = async function() {
       <p>في الصف السفلي، بين زر تبديل الآلة وزر التقييم، يوجد زر يبدّل طريقة تسمية النغمات بين نظامين، وهو متاح <strong>بالعربي وبالإنجليزي</strong> وفي كل التبويبات:</p>
       <p>🔹 <strong>صولفيج (دو، ري، مي... / Do, Re, Mi...)</strong> — الافتراضي.</p>
       <p>🔹 <strong>حروف لاتينية (C, D, E...)</strong> — مفيدة لمن اعتاد قراءة الحروف، وتظهر علامات التحويل (♯ ♭) بعد الحرف.</p>
-      <p>🔹 يكتب الزر الاسمين معاً بسهمين بينهما: <strong>C ⇄ دو</strong> بالعربي و<strong>C ⇄ Do</strong> بالإنجليزي. الاسم الواضح هو النظام المستخدم حالياً، والاسم الباهت هو النظام الذي ستنتقل إليه عند الضغط على الزر.</p>
+      <p>🔹 يكتب الزر الاسمين معاً بسهمين بينهما: <strong>C ⇄ دو</strong> بالعربي و<strong>C ⇄ Do</strong> بالإنجليزي. الاسم الواضح هو النظام الذي ستنتقل إليه عند الضغط على الزر، والاسم الباهت هو النظام المستخدم حالياً (كبقية الأزرار التي تعرض ما بعد الضغط).</p>
       <p>🔹 التبديل يُطبَّق فوراً على كل شيء: أسماء النغمات على الآلة المعروضة (الزند أو الأورغ أو القانون)، قائمة اختيار المحطّ، أسماء الأوتار، أسماء الكوردات، ودائرة الرابعات والخامسات.</p>
       <div class="help-svg-wrap"><img loading="lazy" decoding="async" src="images/help/help_02.jpg" alt="زر تبديل نظام تسمية النغمات (C ⇄ دو)" style="width:120px;border-radius:6px;display:block;margin:8px auto;"/></div>
     </div>
@@ -11420,7 +11420,7 @@ document.getElementById('shared-playBtn').onclick = async function() {
       <p>In the bottom row, between the instrument switch button and the rate button, there is a button that switches between two note-naming systems. It is available in <strong>both Arabic and English</strong> and on all tabs:</p>
       <p>🔹 <strong>Solfège (Do, Re, Mi... / دو، ري، مي...)</strong> — the default.</p>
       <p>🔹 <strong>Latin letters (C, D, E...)</strong> — handy if you are used to reading letter names; accidentals (♯ ♭) appear after the letter.</p>
-      <p>🔹 The button shows both names with arrows between them: <strong>C ⇄ Do</strong> in English and <strong>C ⇄ دو</strong> in Arabic. The bold name is the system currently in use, and the faded one is the system you will switch to when you press it.</p>
+      <p>🔹 The button shows both names with arrows between them: <strong>C ⇄ Do</strong> in English and <strong>C ⇄ دو</strong> in Arabic. The bold name is the system you will switch to when you press it, and the faded one is the system currently in use (like the other buttons, which show what happens after the press).</p>
       <p>🔹 The switch applies instantly everywhere: note names on the displayed instrument (oud fretboard, organ or qanun), the root-selection list, string names, chord names, and the circle of fourths/fifths.</p>
       <div class="help-svg-wrap"><img loading="lazy" decoding="async" src="images/help/help_02E.jpg" alt="Note-naming toggle button (C ⇄ Do)" style="width:120px;border-radius:6px;display:block;margin:8px auto;"/></div>
     </div>
